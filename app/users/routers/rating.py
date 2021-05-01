@@ -21,3 +21,5 @@ def get_rating(id: int, db: Session = Depends(get_db)):
 @router.get('/{id}/users')
 def get_users_by_rating(id: int, db: Session = Depends(get_db)):
     return f"Users of rating {id}"
+
+# NÃO SERÁ UTILIZADO AINDA

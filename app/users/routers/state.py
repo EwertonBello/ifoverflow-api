@@ -21,3 +21,5 @@ def get_state(id: int, db: Session = Depends(get_db)):
 @router.get('/{id}/campus')
 def get_campus_by_state(id: int, db: Session = Depends(get_db)):
     return f"Campus of state {id}"
+
+# NÃO SERÁ UTILIZADO AINDA
