@@ -4,7 +4,7 @@ Version: [v0.2.0]
 
 ## Table to Entity  
 
-- UF - State  
+- UF - States  
 - Campus - Campus  
 - Usuarios - Users  
 - Classes - Ratings  
@@ -19,7 +19,7 @@ Version: [v0.2.0]
 ## Structure
 ```
 ———- Users ————-
-UF - State
+UF - States
 Campus - Campus
 Usuarios - Users
 Classes - Ratings
