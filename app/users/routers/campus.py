@@ -11,7 +11,7 @@ router = APIRouter(
 get_db = database.get_db
 
 @router.get('/')
-def get_campus_list(id: int, db: Session = Depends(get_db)):
+def get_campus_list(db: Session = Depends(get_db)):
     return f"List of Campus"
 
 @router.get('/{id}')
