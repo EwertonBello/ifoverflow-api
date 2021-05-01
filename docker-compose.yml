@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: MYSQL-API-BACKEND
+    env_file:
+      - ./.env
+    ports:
+      - "3306:3306"
+    volumes:
+      - .:/api/data 
