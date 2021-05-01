@@ -16,6 +16,25 @@ Version: [v0.2.0]
 - Tags - Tags  
 - Tags_Perguntas - Tags_Questions  
 
+## Structure
+```
+———- Users ————-
+UF - State
+Campus - Campus
+Usuarios - Users
+Classes - Ratings
+——— Questions --——
+Categorias - Categories
+Perguntas - Questions
+Tags - Tags
+Tags_Perguntas - Tags_Questions
+——— Comments ——-
+Comentarios_Resposta - Comments_Answer
+Comentarios_Pergunta - Comments_Question
+———————————
+Respostas - Answers  
+```
+
 ## RFs
 
 ![RFs](./rfs.png)  
