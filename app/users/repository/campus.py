@@ -16,4 +16,5 @@ def show(id: int, db: Session):
     return campus
 
 def users_by_campus(id: int, db: Session):
-    return f"Repository: Users of campus {id}"
+	users = db.query(Campus.users).filter(Campus.id == id)
+    return users
