@@ -14,13 +14,13 @@ router = APIRouter(
 get_db = database.get_db
 
 @router.get('/', response_model=List[ShowCampus])
-def get_campus_list(db: Session = Depends(get_db)):
+async def get_campus_list(db: Session = Depends(get_db)):
     return campus.get_all(db)
 
 @router.get('/{id}', response_model=ShowCampus)
-def get_campus(id: int, db: Session = Depends(get_db)):
+async def get_campus(id: int, db: Session = Depends(get_db)):
     return campus.show(id, db)
 
 @router.get('/{id}/users', response_model=List[ShowUser])
-def get_users_by_campus(id: int, db: Session = Depends(get_db)):
+async def get_users_by_campus(id: int, db: Session = Depends(get_db)):
     return campus.users_by_campus(id, db)
