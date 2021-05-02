@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends
 from app.users.repository import user
 from app.users.schemas import User, ShowUser, ShowProfile
+from app.users import oauth2
 from app import database
 
 router = APIRouter(
@@ -22,6 +23,5 @@ async def get_user(id: int, db: Session = Depends(get_db)):
     return user.show(id, db)
 
 @router.get('/profile/', response_model=ShowProfile)
-async def get_profile(db: Session = Depends(get_db)):
-    current_user = 1
-    return user.show(current_user, db)
+async def get_profile(current_user: User = Depends(oauth2.get_current_user)):
+    return current_user
