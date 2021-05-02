@@ -20,5 +20,5 @@ def get_user(id: int, db: Session = Depends(get_db)):
     return f"User {id}"
 
 @router.get('/profile')
-def get_user(db: Session = Depends(get_db)):
+def get_profile(db: Session = Depends(get_db)):
     return "My Profile"
