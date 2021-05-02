@@ -9,4 +9,4 @@ def show(id: int, db: Session):
     return f"Repository: State {id}"
 
 def campus_by_state(id: int, db: Session):
-    return f"Repository: Campus of state {id}"
+    return f"Repository: List Campus of state {id}"
