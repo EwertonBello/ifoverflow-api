@@ -8,4 +8,4 @@ def register(request: schemas.User, db: Session):
     return new_user
 
 def show(id: int, db: Session):
-    return f"User by id {id}"
+    return f"Repository: User by id {id}"
