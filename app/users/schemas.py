@@ -1,0 +1,46 @@
+from typing import List, Optional
+from pydantic import BaseModel
+
+
+class User(BaseModel):
+    name:str
+    email:str
+    password:str
+    avatar:str
+    campus_id:int
+
+class ShowRating(BaseModel):
+    name:str
+    description:str
+    class Config():
+        orm_mode = True
+
+class ShowState(BaseModel):
+    id:int
+    name:str
+    class Config():
+        orm_mode = True
+
+class ShowCampus(BaseModel):
+    id:int
+    name:str
+    state: ShowState
+    class Config():
+        orm_mode = True
+
+class ShowProfile(BaseModel):
+    name:str
+    avatar:str
+    email:str
+    rating: ShowRating
+    campus: ShowCampus
+    class Config():
+        orm_mode = True
+
+class ShowUser(BaseModel):
+    name:str
+    avatar:str
+    rating: ShowRating
+    campus: ShowCampus
+    class Config():
+        orm_mode = True
