@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends
+from app.users.repository import state
 from app import database
 
 router = APIRouter(
@@ -12,12 +13,12 @@ get_db = database.get_db
 
 @router.get('/')
 def get_states(db: Session = Depends(get_db)):
-    return f"List of States"
+    return state.get_all(db)
 
 @router.get('/{id}')
 def get_state(id: int, db: Session = Depends(get_db)):
-    return f"State {id}"
+    return state.show(id, db)
 
 @router.get('/{id}/campus')
 def get_campus_by_state(id: int, db: Session = Depends(get_db)):
-    return f"Campus of state {id}"
+    return state.campus_by_state(id, db)
