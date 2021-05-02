@@ -28,6 +28,13 @@ class ShowCampus(BaseModel):
     class Config():
         orm_mode = True
 
+class ShowStateWithCampus(BaseModel):
+    id:int
+    name:str
+    campus: List[ShowCampus]
+    class Config():
+        orm_mode = True
+
 class ShowProfile(BaseModel):
     name:str
     avatar:str
@@ -37,10 +44,22 @@ class ShowProfile(BaseModel):
     class Config():
         orm_mode = True
 
-class ShowUser(BaseModel):
+class ShowBaseUser(BaseModel):
     name:str
     avatar:str
     rating: ShowRating
+    class Config():
+        orm_mode = True
+
+class ShowUser(ShowBaseUser):
     campus: ShowCampus
+    class Config():
+        orm_mode = True
+
+class ShowCampusWithUsers(BaseModel):
+    id:int
+    name:str
+    state: ShowState
+    users: List[ShowBaseUser]
     class Config():
         orm_mode = True
