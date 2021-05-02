@@ -14,7 +14,7 @@ class User(Base):
     password = Column('senha', VARCHAR(200))
     # --- belongsTo ---
     rating_id = Column('Classe_id_classe', INT, ForeignKey('Classes.id_classe'))
-    rating = relationship("Ratings", back_populates="users")
+    rating = relationship("Rating", back_populates="users")
 
     campus_id = Column('Campus_id_campus', INT, ForeignKey('Campus.id_campus'))
     campus = relationship("Campus", back_populates="users")
@@ -40,7 +40,7 @@ class Campus(Base):
     name = Column('nome', VARCHAR(80))
     # --- belongsTo ---
     state_id = Column('UF_id_uf', INT, ForeignKey('UF.id_uf'))
-    state = relationship("States", back_populates="campus")
+    state = relationship("State", back_populates="campus")
     # --- belongsTo ---
 
     # --- hasMany ---
