@@ -13,7 +13,7 @@ router = APIRouter(
 get_db = database.get_db
 
 
-@router.post('/', response_model=ShowUser)
+@router.post('/')
 def register_user(request: User, db: Session = Depends(get_db)):
     return user.register(request, db)
 

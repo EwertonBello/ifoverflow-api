@@ -16,5 +16,6 @@ def show(id: int, db: Session):
     return _state
 
 def campus_by_state(id: int, db: Session):
-    campus = db.query(State.campus).filter(State.id == id)
-    return campus
+    campus_list = db.query(State.campus).filter(State.id == id)
+    print(campus_list)
+    return campus_list

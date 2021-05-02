@@ -1,11 +1,25 @@
+from sqlalchemy import text
 from sqlalchemy.orm import Session
-from app.users import models, schemas
 from fastapi import HTTPException, status
+
+from app.users import models, schemas
 from app.users.hashing import Hash
 
 
 def register(request: schemas.User, db: Session):
-    return new_user
+    request.password=Hash.bcrypt(request.password)
+    new_user = request.dict()
+    try:
+        db.execute(
+            text('CALL cadastrarUsuario(:name, :avatar, :email, :password, :campus_id)'), 
+            new_user)
+        db.commit()
+    except:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            detail="User not created, check the request body and try again")
+
+    return HTTPException(status_code=status.HTTP_201_CREATED,
+                            detail=f"User {request.name} created successfully!")
 
 def show(id: int, db: Session):
     user = db.query(models.User).filter(models.User.id == id).first()
