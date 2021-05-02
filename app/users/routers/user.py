@@ -13,7 +13,7 @@ router = APIRouter(
 get_db = database.get_db
 
 
-@router.post('/')
+@router.post('/', status_code=201)
 async def register_user(request: User, db: Session = Depends(get_db)):
     return user.register(request, db)
 
