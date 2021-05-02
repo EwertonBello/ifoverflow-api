@@ -9,12 +9,12 @@ def get_all(db: Session):
     return campus_list
 
 def show(id: int, db: Session):
-	campus = db.query(Campus).filter(Campus.id == id).first()
+    campus = db.query(Campus).filter(Campus.id == id).first()
     if not campus:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Campus with the id {id} is not available")
     return campus
 
 def users_by_campus(id: int, db: Session):
-	users = db.query(Campus.users).filter(Campus.id == id)
+    users = db.query(Campus.users).filter(Campus.id == id).all()
     return users
