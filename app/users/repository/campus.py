@@ -16,5 +16,8 @@ def show(id: int, db: Session):
     return campus
 
 def users_by_campus(id: int, db: Session):
-    users = db.query(Campus.users).filter(Campus.id == id).all()
-    return users
+	campus = db.query(Campus).filter(Campus.id == id).first()
+	if not campus:
+	    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+	                        detail=f"Campus with the id {id} is not available")
+	return campus
