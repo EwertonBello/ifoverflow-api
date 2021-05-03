@@ -6,7 +6,6 @@ class Question(BaseModel):
     title:str
     description:str
     category_id:int
-    user_id:int
 
 class ShowUser(BaseModel):
     name:str

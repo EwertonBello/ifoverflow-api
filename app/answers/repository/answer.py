@@ -5,7 +5,7 @@ from fastapi import HTTPException, status
 from app.answers import models, schemas
 
 
-def create(current_user_id, request: schemas.Answer, db: Session):
+def create(current_user_id: int, request: schemas.Answer, db: Session):
     new_answer = request.dict()
     new_answer['user_id'] = current_user_id
     try:
