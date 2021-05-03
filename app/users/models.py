@@ -21,6 +21,7 @@ class User(Base):
     # --- belongsTo ---
     # --- hasMany ---
     questions = relationship("Question", back_populates="user")
+    answers = relationship("Answer", back_populates="user")
     # --- hasMany ---
 
 
