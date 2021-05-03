@@ -47,3 +47,4 @@ Respostas - Answers
 
 ![Endpoints](./docs.png)
 ![Endpoints2](./docs2.png)
+![Endpoints3](./docs3.png)
