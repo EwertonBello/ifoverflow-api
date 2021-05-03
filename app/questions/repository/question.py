@@ -36,7 +36,10 @@ def search(query:str, db: Session):
 
 def vote_question(question_id: int, db: Session):
     try:
-        db.execute(text('CALL votarNaPergunta(:question_id)'), question_id)
+        db.execute(
+            text('CALL votarNaPergunta(:question_id)'), 
+            {'question_id': question_id}
+        )
         db.commit()
     except Exception as e:
         print(e)
