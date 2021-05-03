@@ -45,13 +45,10 @@ def vote_answer(answer_id: int, db: Session):
 
 def accept_answer(current_user_id: int, answer_id: int, db: Session):
     """Se o dono da pergunta for o current user, permite isso"""
-    _answer = db.query(models.Answer).filter(models.Answer.id == id).first()
-    print(_answer)
-    print(_answer.question.user_id)
+    _answer = db.query(models.Answer).filter(models.Answer.id == answer_id).first()
     if _answer.question.user_id != current_user_id:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                     detail="Accepted Answer unauthorized, check the request")
-    print("point1")
     try:
         db.execute(
             text('CALL atualizarParaMelhorResposta(:answer_id)'), 

@@ -44,7 +44,7 @@ class ShowAnswer(BaseModel):
 class ShowQuestion(ShowBaseQuestion):
     tags: List[ShowTag]
     # comments: List[ShowComment]
-    # answers: List[ShowAnswer]
+    answers: List[ShowAnswer]
     class Config():
         orm_mode = True
 
