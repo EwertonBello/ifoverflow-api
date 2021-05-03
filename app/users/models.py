@@ -19,6 +19,9 @@ class User(Base):
     campus_id = Column('Campus_id_campus', INT, ForeignKey('Campus.id_campus'))
     campus = relationship("Campus", back_populates="users")
     # --- belongsTo ---
+    # --- hasMany ---
+    questions = relationship("Question", back_populates="user")
+    # --- hasMany ---
 
 
 class Rating(Base):
