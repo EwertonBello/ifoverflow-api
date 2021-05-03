@@ -26,8 +26,8 @@ async def get_question(id: int, db: Session = Depends(get_db)):
     return question.show(id, db)
 
 # @router.get('/{query}', response_model=List[ShowBaseQuestion])
-@router.get('/{query}')
-async def search_questions(query:str, db: Session = Depends(get_db)):
+@router.get('/search/{query}')
+async def search_questions(query: str, db: Session = Depends(get_db)):
     return question.search(query, db)
 
 @router.put('/{id}')
