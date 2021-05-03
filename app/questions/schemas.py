@@ -23,6 +23,7 @@ class ShowBaseQuestion(BaseModel):
         orm_mode = True
 
 class ShowTag(BaseModel):
+    id:int
     name:str
     class Config():
         orm_mode = True
@@ -43,8 +44,8 @@ class ShowAnswer(BaseModel):
 
 class ShowQuestion(ShowBaseQuestion):
     tags: List[ShowTag]
-    comments: List[ShowComment]
-    answers: List[ShowAnswer]
+    # comments: List[ShowComment]
+    # answers: List[ShowAnswer]
     class Config():
         orm_mode = True
 

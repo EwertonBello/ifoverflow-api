@@ -1,3 +1,4 @@
+from sqlalchemy import text
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 
@@ -11,7 +12,8 @@ def create(request: schemas.Question, db: Session):
             text('CALL perguntar(:title, :description, :category_id, :user_id)'), 
             new_question)
         db.commit()
-    except:
+    except Exception as e:
+        print(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                             detail="Question not created, check the request body and try again")
 
@@ -36,7 +38,8 @@ def vote_question(question_id: int, db: Session):
     try:
         db.execute(text('CALL votarNaPergunta(:question_id)'), question_id)
         db.commit()
-    except:
+    except Exception as e:
+        print(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                             detail="Votes not update, check the request and try again")
 

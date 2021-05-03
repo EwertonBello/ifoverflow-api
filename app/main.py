@@ -6,6 +6,9 @@ from app.users.routers import state as users_state
 from app.users.routers import campus as users_campus
 from app.users.routers import user as users_user
 from app.users.routers import authentication as users_authentication
+from app.questions.routers import category as questions_category
+from app.questions.routers import tag as questions_tag
+from app.questions.routers import question as questions_question
 
 from app.config import get_settings
 
@@ -29,3 +32,6 @@ app.include_router(users_state.router)
 app.include_router(users_campus.router)
 app.include_router(users_user.router)
 app.include_router(users_authentication.router)
+app.include_router(questions_category.router)
+app.include_router(questions_tag.router)
+app.include_router(questions_question.router)
