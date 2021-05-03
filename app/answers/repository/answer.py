@@ -5,9 +5,9 @@ from fastapi import HTTPException, status
 from app.answers import models, schemas
 
 
-def create(request: schemas.Answer, db: Session):
-    return "create answer"
+def create(current_user_id: int, request: schemas.Answer, db: Session):
     new_answer = request.dict()
+    new_answer['user_id'] = current_user_id
     try:
         db.execute(
             text('CALL responder(:description, :user_id, :question_id)'), 
@@ -22,7 +22,6 @@ def create(request: schemas.Answer, db: Session):
                             detail="Answer created successfully!")
 
 def show(id: int, db: Session):
-    return "show answer"
     _answer = db.query(models.Answer).filter(models.Answer.id == id).first()
     if not _answer:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
@@ -30,7 +29,6 @@ def show(id: int, db: Session):
     return _answer
 
 def vote_answer(answer_id: int, db: Session):
-    return "vote_answer"
     try:
         db.execute(
             text('CALL votarNaResposta(:answer_id)'), 
@@ -47,14 +45,10 @@ def vote_answer(answer_id: int, db: Session):
 
 def accept_answer(current_user_id: int, answer_id: int, db: Session):
     """Se o dono da pergunta for o current user, permite isso"""
-    _answer = db.query(models.Answer).filter(models.Answer.id == id).first()
-    print(_answer)
-    print(_answer.question.user_id)
+    _answer = db.query(models.Answer).filter(models.Answer.id == answer_id).first()
     if _answer.question.user_id != current_user_id:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                     detail="Accepted Answer unauthorized, check the request")
-    print("point1")
-    return "vote_answer"
     try:
         db.execute(
             text('CALL atualizarParaMelhorResposta(:answer_id)'), 
