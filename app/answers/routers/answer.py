@@ -2,7 +2,7 @@ from typing import List
 from fastapi import APIRouter
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends
-# from app.answers.repository import answers
+from app.answers.repository import answers
 from app.answers.schemas import ShowAnswer, Answer
 from app import database
 
