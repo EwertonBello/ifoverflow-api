@@ -27,7 +27,7 @@ async def get_question(id: int, db: Session = Depends(get_db)):
 
 @router.get('/{query}')
 async def search_questions(db: Session = Depends(get_db)):
-    return "question.get_all(query, db)"
+    return "question.search(query, db)"
 
 @router.put('/{id}')
 async def vote_question(id: int, db: Session = Depends(get_db)):
