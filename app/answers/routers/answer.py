@@ -4,6 +4,8 @@ from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends
 from app.answers.repository import answers
 from app.answers.schemas import ShowAnswer, Answer
+from app.users.schemas import User
+from app.users import oauth2
 from app import database
 
 router = APIRouter(
@@ -26,5 +28,5 @@ async def vote_answer(id: int, db: Session = Depends(get_db)):
     return answers.vote_answer(id, db)
 
 @router.put('/{id}')
-async def accept_answer(id: int, db: Session = Depends(get_db)):
-    return answers.accept_answer(current_user_id, id, db)
+async def accept_answer(id: int, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):
+    return answers.accept_answer(current_user.id, id, db)
