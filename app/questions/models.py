@@ -17,6 +17,9 @@ class Question(Base):
     user_id = Column('Usuarios_id_usuario', INT, ForeignKey('Usuarios.id_usuario'))
     user = relationship("User", back_populates="questions")
     # --- belongsTo ---
+    # --- hasMany ---
+    tags = relationship("Tag", back_populates="questions")
+    # --- hasMany ---
 
 
 class Category(Base):
@@ -29,26 +32,23 @@ class Category(Base):
     # --- hasMany ---
 
 
-class Campus(Base):
-    __tablename__ = 'Campus'
+class Tag(Base):
+    __tablename__ = 'Tags'
 
-    id = Column('id_campus', INT, primary_key=True)
-    name = Column('nome', VARCHAR(80))
-    # --- belongsTo ---
-    state_id = Column('UF_id_uf', INT, ForeignKey('UF.id_uf'))
-    state = relationship("State", back_populates="campus")
-    # --- belongsTo ---
-
-    # --- hasMany ---
-    users = relationship("User", back_populates="campus")
-    # --- hasMany ---
-
-
-class State(Base):
-    __tablename__ = 'UF'
-
-    id = Column('id_uf', INT, primary_key=True)
+    id = Column('id_tag', INT, primary_key=True)
     name = Column('nome', VARCHAR(80))
     # --- hasMany ---
-    campus = relationship("Campus", back_populates="state")
+    questions = relationship("Question", back_populates="tags")
     # --- hasMany ---
+
+
+class Tags_Questions(Base):
+    __tablename__ = 'Tags_Perguntas'
+
+    # --- belongsTo ---
+    tag_id = Column('Tags_id_tag', INT, ForeignKey('Tags.id_tag'))
+    tag = relationship("Tag", back_populates="questions")
+
+    question_id = Column('Perguntas_id_pergunta', INT, ForeignKey('Perguntas.id_pergunta'))
+    question = relationship("Question", back_populates="tags")
+    # --- belongsTo ---
