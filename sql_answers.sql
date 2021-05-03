@@ -46,3 +46,13 @@ END IF;
 
 END //
 DELIMITER ;
+
+
+-- RF 08 ------------------------------
+DELIMITER //
+CREATE PROCEDURE atualizarParaMelhorResposta (id_resposta INT)
+BEGIN
+  UPDATE respostas SET respostas.aceita = 1 
+  WHERE respostas.id_resposta = id_resposta;
+END //
+DELIMITER ;

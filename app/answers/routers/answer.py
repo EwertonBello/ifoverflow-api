@@ -2,7 +2,7 @@ from typing import List
 from fastapi import APIRouter
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends
-# from app.answers.repository import answers
+from app.answers.repository import answers
 from app.answers.schemas import ShowAnswer, Answer
 from app import database
 
@@ -27,5 +27,4 @@ async def vote_answer(id: int, db: Session = Depends(get_db)):
 
 @router.put('/{id}')
 async def accept_answer(id: int, db: Session = Depends(get_db)):
-	"""Se o dono da pergunta for o current user, permite isso"""
-    return "answers.accept_answer(id, db)"
+    return "answers.accept_answer(current_user_id, id, db)"
