@@ -18,6 +18,7 @@ class Question(Base):
     user = relationship("User", back_populates="questions")
     # --- belongsTo ---
     # --- hasMany ---
+    answers = relationship("Answer", back_populates="question")
     tags = relationship("Tags_Questions", back_populates="question")
     # --- hasMany ---
 

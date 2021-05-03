@@ -6,7 +6,6 @@ class Question(BaseModel):
     title:str
     description:str
     category_id:int
-    user_id:int
 
 class ShowUser(BaseModel):
     name:str
@@ -45,7 +44,7 @@ class ShowAnswer(BaseModel):
 class ShowQuestion(ShowBaseQuestion):
     tags: List[ShowTag]
     # comments: List[ShowComment]
-    # answers: List[ShowAnswer]
+    answers: List[ShowAnswer]
     class Config():
         orm_mode = True
 
