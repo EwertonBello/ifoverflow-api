@@ -18,7 +18,7 @@ class Question(Base):
     user = relationship("User", back_populates="questions")
     # --- belongsTo ---
     # --- hasMany ---
-    tags = relationship("Tag", back_populates="questions")
+    tags = relationship("Tags_Questions", back_populates="question")
     # --- hasMany ---
 
 
@@ -38,7 +38,7 @@ class Tag(Base):
     id = Column('id_tag', INT, primary_key=True)
     name = Column('nome', VARCHAR(80))
     # --- hasMany ---
-    questions = relationship("Question", back_populates="tags")
+    questions = relationship("Tags_Questions", back_populates="tag")
     # --- hasMany ---
 
 
@@ -46,9 +46,9 @@ class Tags_Questions(Base):
     __tablename__ = 'Tags_Perguntas'
 
     # --- belongsTo ---
-    tag_id = Column('Tags_id_tag', INT, ForeignKey('Tags.id_tag'))
+    tag_id = Column('Tags_id_tag', INT, ForeignKey('Tags.id_tag'), primary_key=True)
     tag = relationship("Tag", back_populates="questions")
 
-    question_id = Column('Perguntas_id_pergunta', INT, ForeignKey('Perguntas.id_pergunta'))
+    question_id = Column('Perguntas_id_pergunta', INT, ForeignKey('Perguntas.id_pergunta'), primary_key=True)
     question = relationship("Question", back_populates="tags")
     # --- belongsTo ---
