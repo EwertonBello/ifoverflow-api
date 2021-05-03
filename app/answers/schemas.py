@@ -4,9 +4,6 @@ from pydantic import BaseModel
 
 class Answer(BaseModel):
     description:str
-    votes:int
-    accepted:bool
-    user_id:int
     question_id:int
 
 class ShowUser(BaseModel):
