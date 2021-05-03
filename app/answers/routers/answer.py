@@ -24,3 +24,8 @@ async def get_answer(id: int, db: Session = Depends(get_db)):
 @router.put('/{id}')
 async def vote_answer(id: int, db: Session = Depends(get_db)):
     return "answers.vote_answer(id, db)"
+
+@router.put('/{id}')
+async def accept_answer(id: int, db: Session = Depends(get_db)):
+	"""Se o dono da pergunta for o current user, permite isso"""
+    return "answers.accept_answer(id, db)"
