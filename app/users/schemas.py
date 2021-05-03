@@ -39,6 +39,7 @@ class ShowProfile(BaseModel):
     name:str
     avatar:str
     email:str
+    votes:int
     rating: ShowRating
     campus: ShowCampus
     class Config():
@@ -47,6 +48,7 @@ class ShowProfile(BaseModel):
 class ShowBaseUser(BaseModel):
     name:str
     avatar:str
+    votes:int
     rating: ShowRating
     class Config():
         orm_mode = True

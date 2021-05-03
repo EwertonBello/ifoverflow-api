@@ -14,7 +14,8 @@ def register(request: schemas.User, db: Session):
             text('CALL cadastrarUsuario(:name, :avatar, :email, :password, :campus_id)'), 
             new_user)
         db.commit()
-    except:
+    except Exception as e:
+        print(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                             detail="User not created, check the request body and try again")
 
