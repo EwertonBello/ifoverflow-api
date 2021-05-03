@@ -5,8 +5,9 @@ from fastapi import HTTPException, status
 from app.questions import models, schemas
 
 
-def create(request: schemas.Question, db: Session):
+def create(current_user_id:int, request: schemas.Question, db: Session):
     new_question = request.dict()
+    new_question['user_id'] = current_user_id
     try:
         db.execute(
             text('CALL perguntar(:title, :description, :category_id, :user_id)'), 
