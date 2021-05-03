@@ -5,7 +5,6 @@ from app.questions import models, schemas
 
 
 def create(request: schemas.Question, db: Session):
-    return "create"
     new_question = request.dict()
     try:
         db.execute(
@@ -20,12 +19,10 @@ def create(request: schemas.Question, db: Session):
                             detail="Question created successfully!")
 
 def get_all(db: Session):
-    return "get_all"
     questions = db.query(models.Question).all()
     return questions
 
 def show(id: int, db: Session):
-    return "show"
     _question = db.query(models.Question).filter(models.Question.id == id).first()
     if not _question:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
@@ -36,7 +33,6 @@ def search(query:str, db: Session):
     return f"search questions with {query}"
 
 def vote_question(question_id: int, db: Session):
-    return "vote_question"
     try:
         db.execute(text('CALL votarNaPergunta(:question_id)'), question_id)
         db.commit()
