@@ -24,8 +24,8 @@ async def comment_question(request: CommentQuestion, db: Session = Depends(get_d
 
 @router.get('/{id}/answer', response_model=ShowCommentAnswer)
 async def get_comment_answer(id: int, db: Session = Depends(get_db)):
-    return "comment.show('answer', id, db)"
+    return "comment.show(False, id, db)"
 
 @router.get('/{id}/question', response_model=ShowCommentQuestion)
 async def get_comment_question(id: int, db: Session = Depends(get_db)):
-    return "comment.show('question', id, db)"
+    return "comment.show(True, id, db)"
