@@ -20,6 +20,7 @@ class Question(Base):
     # --- hasMany ---
     answers = relationship("Answer", back_populates="question")
     tags = relationship("Tags_Questions", back_populates="question")
+    comments = relationship("Comments_Question", back_populates="question")
     # --- hasMany ---
 
 
