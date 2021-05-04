@@ -33,5 +33,5 @@ async def search_questions(query: str, db: Session = Depends(get_db)):
     return question.search(query, db)
 
 @router.put('/{id}/vote')
-async def vote_question(id: int, db: Session = Depends(get_db)):
+async def vote_question(id: int, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):
     return question.vote_question(id, db)

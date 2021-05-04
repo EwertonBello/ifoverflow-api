@@ -24,7 +24,7 @@ async def get_answer(id: int, db: Session = Depends(get_db)):
     return answer.show(id, db)
 
 @router.put('/{id}/vote')
-async def vote_answer(id: int, db: Session = Depends(get_db)):
+async def vote_answer(id: int, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):
     return answer.vote_answer(id, db)
 
 @router.put('/{id}/accept')

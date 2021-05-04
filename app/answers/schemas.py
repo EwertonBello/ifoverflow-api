@@ -18,10 +18,20 @@ class ShowComment(BaseModel):
     class Config():
         orm_mode = True
 
+class ShowQuestion(BaseModel):
+    title:str
+    description:str
+    votes:int
+    user: ShowUser
+    class Config():
+        orm_mode = True
+
 class ShowAnswer(BaseModel):
     description:str
     votes:int
     accepted:bool
     user: ShowUser
+    question: ShowQuestion
+    comments: List[ShowComment]
     class Config():
         orm_mode = True
