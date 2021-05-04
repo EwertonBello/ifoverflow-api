@@ -6,7 +6,6 @@ from app.comments import models, schemas
 
 
 def comment_answer(current_user_id:int, request: schemas.CommentAnswer, db: Session):
-    return "comment_answer"
     new_comment = request.dict()
     new_comment['user_id'] = current_user_id
     try:
@@ -23,7 +22,6 @@ def comment_answer(current_user_id:int, request: schemas.CommentAnswer, db: Sess
                             detail="Comment created successfully!")
 
 def comment_question(current_user_id:int, request: schemas.CommentQuestion, db: Session):
-    return "comment_question"
     new_comment = request.dict()
     new_comment['user_id'] = current_user_id
     try:
