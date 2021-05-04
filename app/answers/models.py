@@ -18,5 +18,5 @@ class Answer(Base):
     question = relationship("Question", back_populates="answers")
     # --- belongsTo ---
     # --- hasMany ---
-    # comments = relationship("Comments_Answer", back_populates="answer")
+    comments = relationship("Comments_Answer", back_populates="answer")
     # --- hasMany ---
