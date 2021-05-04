@@ -15,7 +15,10 @@ from app.comments.routers import comment as comments_comment
 from app.config import get_settings
 
 
-app = FastAPI(title=get_settings().app_name)
+app = FastAPI(
+	title=get_settings().app_name,
+	version="1.0.0"
+)
 
 origins = [
     "http://localhost",
