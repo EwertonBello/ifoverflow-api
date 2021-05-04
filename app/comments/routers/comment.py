@@ -14,10 +14,18 @@ router = APIRouter(
 
 get_db = database.get_db
 
-@router.post('/', status_code=201)
-async def create_comment(request: Comment, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):
-    return "comment.create(current_user.id, request, db)"
+@router.post('/answer', status_code=201)
+async def comment_answer(request: Comment, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):
+    return "comment.comment_answer(current_user.id, request, db)"
 
-@router.get('/{id}', response_model=ShowComment)
-async def get_comment(id: int, db: Session = Depends(get_db)):
-    return "comment.show(id, db)"
+@router.post('/question', status_code=201)
+async def comment_question(request: Comment, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):
+    return "comment.comment_question(current_user.id, request, db)"
+
+@router.get('/{id}/answer', response_model=ShowComment)
+async def get_comment_answer(id: int, db: Session = Depends(get_db)):
+    return "comment.show('answer', id, db)"
+
+@router.get('/{id}/question', response_model=ShowComment)
+async def get_comment_question(id: int, db: Session = Depends(get_db)):
+    return "comment.show('question', id, db)"
