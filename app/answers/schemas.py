@@ -32,5 +32,6 @@ class ShowAnswer(BaseModel):
     accepted:bool
     user: ShowUser
     question: ShowQuestion
+    comments: List[ShowComment]
     class Config():
         orm_mode = True
