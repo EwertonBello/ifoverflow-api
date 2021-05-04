@@ -14,6 +14,7 @@ class ShowUser(BaseModel):
         orm_mode = True
 
 class ShowBaseQuestion(BaseModel):
+    id:int
     title:str
     description:str
     votes:int
