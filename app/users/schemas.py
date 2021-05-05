@@ -36,6 +36,7 @@ class ShowStateWithCampus(BaseModel):
         orm_mode = True
 
 class ShowProfile(BaseModel):
+    id:int
     name:str
     avatar:str
     email:str
