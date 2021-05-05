@@ -8,6 +8,7 @@ class Question(BaseModel):
     category_id:int
 
 class ShowUser(BaseModel):
+    id:int
     name:str
     avatar:str
     class Config():

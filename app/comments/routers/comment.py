@@ -16,11 +16,11 @@ get_db = database.get_db
 
 @router.post('/answer', status_code=201)
 async def comment_answer(request: CommentAnswer, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):
-    return comment.comment_answer(current_user.id, request, db)
+    return comment.comment_answer(current_user, request, db)
 
 @router.post('/question', status_code=201)
 async def comment_question(request: CommentQuestion, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):
-    return comment.comment_question(current_user.id, request, db)
+    return comment.comment_question(current_user, request, db)
 
 @router.get('/{id}/answer', response_model=ShowCommentAnswer)
 async def get_comment_answer(id: int, db: Session = Depends(get_db)):
