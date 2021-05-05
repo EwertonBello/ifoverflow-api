@@ -32,16 +32,18 @@ class ShowQuestion(BaseModel):
     class Config():
         orm_mode = True
 
-class ShowCommentAnswer(BaseModel):
+class ShowBaseComment(BaseModel):
     description:str
     user: ShowUser
+    class Config():
+        orm_mode = True
+
+class ShowCommentAnswer(ShowBaseComment):
     answer: ShowAnswer
     class Config():
         orm_mode = True
 
-class ShowCommentQuestion(BaseModel):
-    description:str
-    user: ShowUser
+class ShowCommentQuestion(ShowBaseComment):
     question: ShowQuestion
     class Config():
         orm_mode = True

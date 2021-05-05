@@ -1,6 +1,6 @@
 # Ifoverflow
 
-Version: [v1.2.0]
+Version: [v1.3.0]
 
 ## Table to Entity  
 
