@@ -5,9 +5,9 @@ from fastapi import HTTPException, status
 from app.comments import models, schemas
 
 
-def comment_answer(current_user_id:int, request: schemas.CommentAnswer, db: Session):
+def comment_answer(current_user: schemas.ShowUser, request: schemas.CommentAnswer, db: Session):
     new_comment = request.dict()
-    new_comment['user_id'] = current_user_id
+    new_comment['user_id'] = current_user.id
     try:
         db.execute(
             text('CALL comentarResposta(:description, :user_id, :answer_id)'), 
@@ -18,12 +18,12 @@ def comment_answer(current_user_id:int, request: schemas.CommentAnswer, db: Sess
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                             detail="Comment not created, check the request body and try again")
 
-    return HTTPException(status_code=status.HTTP_201_CREATED,
-                            detail="Comment created successfully!")
+    new_comment['user'] = {'id':current_user.id,'name':current_user.name,'avatar':current_user.avatar}
+    return new_comment
 
-def comment_question(current_user_id:int, request: schemas.CommentQuestion, db: Session):
+def comment_question(current_user:schemas.ShowUser, request: schemas.CommentQuestion, db: Session):
     new_comment = request.dict()
-    new_comment['user_id'] = current_user_id
+    new_comment['user_id'] = current_user.id
     try:
         db.execute(
             text('CALL comentarPergunta(:description, :user_id, :question_id)'), 
@@ -34,8 +34,8 @@ def comment_question(current_user_id:int, request: schemas.CommentQuestion, db: 
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                             detail="Comment not created, check the request body and try again")
 
-    return HTTPException(status_code=status.HTTP_201_CREATED,
-                            detail="Comment created successfully!")
+    new_comment['user'] = {'id':current_user.id,'name':current_user.name,'avatar':current_user.avatar}
+    return new_comment
 
 def show(in_question: bool, id: int, db: Session):
     if in_question:
