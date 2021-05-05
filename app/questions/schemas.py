@@ -35,6 +35,7 @@ class ShowComment(BaseModel):
         orm_mode = True
 
 class ShowAnswer(BaseModel):
+    id:int
     description:str
     votes:int
     accepted:bool
