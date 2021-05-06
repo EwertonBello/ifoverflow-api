@@ -26,11 +26,16 @@ class ShowQuestion(BaseModel):
     class Config():
         orm_mode = True
 
-class ShowAnswer(BaseModel):
+class ShowBaseAnswer(BaseModel):
+    id:int
     description:str
     votes:int
     accepted:bool
     user: ShowUser
+    class Config():
+        orm_mode = True
+
+class ShowAnswer(ShowBaseAnswer):
     question: ShowQuestion
     comments: List[ShowComment]
     class Config():
