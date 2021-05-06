@@ -54,3 +54,13 @@ class Tags_Questions(Base):
     question_id = Column('Perguntas_id_pergunta', INT, ForeignKey('Perguntas.id_pergunta'), primary_key=True)
     question = relationship("Question", back_populates="tags")
     # --- belongsTo ---
+
+
+class Votes_Question(Base):
+    __tablename__ = 'Votos_Pergunta'
+
+    vote = Column('voto', INT)
+    # --- belongsTo ---
+    user_id = Column('Usuarios_id_usuario', INT, ForeignKey('Usuarios.id_usuario'), primary_key=True)
+    question_id = Column('Perguntas_id_pergunta', INT, ForeignKey('Perguntas.id_pergunta'), primary_key=True)
+    # --- belongsTo ---
