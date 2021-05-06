@@ -5,21 +5,25 @@ from fastapi import HTTPException, status
 from app.answers import models, schemas
 
 
-def create(current_user_id: int, request: schemas.Answer, db: Session):
+def create(current_user: schemas.ShowUser, request: schemas.Answer, db: Session):
     new_answer = request.dict()
-    new_answer['user_id'] = current_user_id
+    new_answer['user_id'] = current_user.id
     try:
         db.execute(
             text('CALL responder(:description, :user_id, :question_id)'), 
             new_answer)
         db.commit()
+        [answer_id] = db.execute('SELECT LAST_INSERT_ID() AS id').fetchone()
     except Exception as e:
         print(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                             detail="Answer not created, check the request body and try again")
 
-    return HTTPException(status_code=status.HTTP_201_CREATED,
-                            detail="Answer created successfully!")
+    new_answer['id'] = answer_id
+    new_answer['votes'] = 0
+    new_answer['accepted'] = False
+    new_answer['user'] = current_user
+    return new_answer
 
 def show(id: int, db: Session):
     _answer = db.query(models.Answer).filter(models.Answer.id == id).first()
