@@ -34,8 +34,8 @@ async def search_questions(query: str, db: Session = Depends(get_db)):
 
 @router.put('/{id}/positive')
 async def vote_positive(id: int, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):
-    return question.vote_question(True, id, db)
+    return question.vote_question(True, current_user.id, id, db)
 
 @router.put('/{id}/negative')
 async def vote_negative(id: int, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):
-    return question.vote_question(False, id, db)
+    return question.vote_question(False, current_user.id, id, db)
