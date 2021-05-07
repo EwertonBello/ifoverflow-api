@@ -23,7 +23,7 @@ WHERE respostas.id_resposta = id_resposta);
 
 -- RF 05 - Resposta
 DELIMITER //
-CREATE PROCEDURE votarNaResposta (id_resposta INT)
+CREATE PROCEDURE votarNaResposta (id_resposta INT, voto INT)
 BEGIN
 
 DECLARE `_rollback` BOOL DEFAULT 0;
@@ -34,9 +34,9 @@ START TRANSACTION;
   SELECT donoDaResposta(id_resposta)
   INTO @id_usuario;
   -- ATUALIZO O VOTO DO DONO DA RESPOSTA
-  UPDATE usuarios SET usuarios.votos = usuarios.votos + 1 WHERE usuarios.id_usuario = @id_usuario;
+  UPDATE usuarios SET usuarios.votos = usuarios.votos + voto WHERE usuarios.id_usuario = @id_usuario;
   -- ATUALIZO O VOTO DA RESPOSTA
-  UPDATE respostas SET respostas.votos = respostas.votos + 1 WHERE respostas.id_resposta = id_resposta;
+  UPDATE respostas SET respostas.votos = respostas.votos + voto WHERE respostas.id_resposta = id_resposta;
 
 IF `_rollback` THEN
     ROLLBACK;
