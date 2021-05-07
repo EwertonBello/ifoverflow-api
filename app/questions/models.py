@@ -12,6 +12,7 @@ class Question(Base):
     votes = Column('votos', INT)
 
     is_owner:bool = False
+    my_vote: int = 0
     # --- belongsTo ---
     category_id = Column('Categorias_id_categoria', INT, ForeignKey('Categorias.id_categoria'))
     category = relationship("Category", back_populates="questions")

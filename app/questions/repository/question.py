@@ -32,7 +32,10 @@ def show(current_user:schemas.ShowUser, id: int, db: Session):
     if not _question:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Question with the id {id} is not available")
-
+    try:
+        _question.my_vote = [vote.vote for vote in _question.my_votes if vote.user_id == current_user_id][0]
+    except IndexError:
+        pass
     _question.is_owner = (current_user_id == _question.user_id)
     return _question
 
