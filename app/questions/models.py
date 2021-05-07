@@ -23,6 +23,7 @@ class Question(Base):
     answers = relationship("Answer", back_populates="question")
     tags = relationship("Tags_Questions", back_populates="question")
     comments = relationship("Comments_Question", back_populates="question")
+    my_votes = relationship("Votes_Answer", back_populates="question")
     # --- hasMany ---
 
 
@@ -65,4 +66,5 @@ class Votes_Question(Base):
     # --- belongsTo ---
     user_id = Column('Usuarios_id_usuario', INT, ForeignKey('Usuarios.id_usuario'), primary_key=True)
     question_id = Column('Perguntas_id_pergunta', INT, ForeignKey('Perguntas.id_pergunta'), primary_key=True)
+    question = relationship("Question", back_populates="my_votes")
     # --- belongsTo ---

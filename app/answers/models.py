@@ -19,6 +19,7 @@ class Answer(Base):
     # --- belongsTo ---
     # --- hasMany ---
     comments = relationship("Comments_Answer", back_populates="answer")
+    my_votes = relationship("Votes_Answer", back_populates="answer")
     # --- hasMany ---
 
 
@@ -29,4 +30,5 @@ class Votes_Answer(Base):
     # --- belongsTo ---
     user_id = Column('Usuarios_id_usuario', INT, ForeignKey('Usuarios.id_usuario'), primary_key=True)
     answer_id = Column('Respostas_id_resposta', INT, ForeignKey('Respostas.id_resposta'), primary_key=True)
+    answer = relationship("Answer", back_populates="my_votes")
     # --- belongsTo ---
