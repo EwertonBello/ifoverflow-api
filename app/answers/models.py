@@ -10,6 +10,7 @@ class Answer(Base):
     description = Column('descricao', TEXT(1000))
     votes = Column('votos', INT)
     accepted = Column('aceita', BOOLEAN)
+    my_vote: int = 0
     # --- belongsTo ---
     user_id = Column('Usuarios_id_usuario', INT, ForeignKey('Usuarios.id_usuario'))
     user = relationship("User", back_populates="answers")
@@ -19,14 +20,17 @@ class Answer(Base):
     # --- belongsTo ---
     # --- hasMany ---
     comments = relationship("Comments_Answer", back_populates="answer")
+    my_votes = relationship("Votes_Answer", back_populates="answer")
     # --- hasMany ---
 
 
 class Votes_Answer(Base):
     __tablename__ = 'Votos_Resposta'
 
+    id = Column('id_votos_resposta', INT, primary_key=True)
     vote = Column('voto', INT)
     # --- belongsTo ---
-    user_id = Column('Usuarios_id_usuario', INT, ForeignKey('Usuarios.id_usuario'), primary_key=True)
-    answer_id = Column('Respostas_id_resposta', INT, ForeignKey('Respostas.id_resposta'), primary_key=True)
+    user_id = Column('Usuarios_id_usuario', INT, ForeignKey('Usuarios.id_usuario'))
+    answer_id = Column('Respostas_id_resposta', INT, ForeignKey('Respostas.id_resposta'))
+    answer = relationship("Answer", back_populates="my_votes")
     # --- belongsTo ---
