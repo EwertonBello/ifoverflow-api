@@ -10,6 +10,8 @@ class Question(Base):
     title = Column('assunto', VARCHAR(100))
     description = Column('descricao', TEXT(1000))
     votes = Column('votos', INT)
+
+    is_owner:bool = False
     # --- belongsTo ---
     category_id = Column('Categorias_id_categoria', INT, ForeignKey('Categorias.id_categoria'))
     category = relationship("Category", back_populates="questions")
