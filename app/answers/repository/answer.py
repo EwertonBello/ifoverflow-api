@@ -42,8 +42,8 @@ def vote_answer(positive:bool=True, current_user_id: int, answer_id: int, db: Se
     vote = 1 if positive else (-1)
     try:
         db.execute(
-            text('CALL votarNaResposta(:answer_id, :vote)'), 
-            {'answer_id': answer_id, 'vote': vote}
+            text('CALL votarNaResposta(:user_id, :answer_id, :vote)'), 
+            {'user_id': current_user_id, 'answer_id': answer_id, 'vote': vote}
         )
         db.commit()
     except Exception as e:
