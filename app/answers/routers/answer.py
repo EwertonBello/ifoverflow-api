@@ -23,9 +23,13 @@ async def create_answer(request: Answer, db: Session = Depends(get_db), current_
 async def get_answer(id: int, db: Session = Depends(get_db)):
     return answer.show(id, db)
 
-@router.put('/{id}/vote')
-async def vote_answer(id: int, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):
-    return answer.vote_answer(id, db)
+@router.put('/{id}/positive')
+async def vote_positive(id: int, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):
+    return answer.vote_answer(True, id, db)
+
+@router.put('/{id}/negative')
+async def vote_negative(id: int, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):
+    return answer.vote_answer(False, id, db)
 
 @router.put('/{id}/accept')
 async def accept_answer(id: int, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):

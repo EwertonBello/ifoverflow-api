@@ -32,11 +32,12 @@ def show(id: int, db: Session):
                             detail=f"Answer with the id {id} is not available")
     return _answer
 
-def vote_answer(answer_id: int, db: Session):
+def vote_answer(positive:bool=True, answer_id: int, db: Session):
+    vote = 1 if positive else (-1)
     try:
         db.execute(
-            text('CALL votarNaResposta(:answer_id)'), 
-            {'answer_id': answer_id}
+            text('CALL votarNaResposta(:answer_id, :vote)'), 
+            {'answer_id': answer_id, 'vote': vote}
         )
         db.commit()
     except Exception as e:
