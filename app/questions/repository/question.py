@@ -49,11 +49,12 @@ def show(current_user:schemas.ShowUser, id: int, db: Session):
 def search(query:str, db: Session):
     return f"search questions with {query}"
 
-def vote_question(question_id: int, db: Session):
+def vote_question(positive:bool=True, question_id: int, db: Session):
+    vote = 1 if positive else (-1)
     try:
         db.execute(
-            text('CALL votarNaPergunta(:question_id)'), 
-            {'question_id': question_id}
+            text('CALL votarNaPergunta(:question_id, :vote)'), 
+            {'question_id': question_id, 'vote': vote}
         )
         db.commit()
     except Exception as e:
