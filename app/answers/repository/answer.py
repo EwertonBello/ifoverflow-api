@@ -32,7 +32,7 @@ def show(id: int, db: Session):
                             detail=f"Answer with the id {id} is not available")
     return _answer
 
-def vote_answer(positive:bool=True, current_user_id: int, answer_id: int, db: Session):
+def vote_answer(positive:bool, current_user_id: int, answer_id: int, db: Session):
     _answer = db.query(models.Answer).filter(models.Answer.id == answer_id).first()
     for my_vote in _answer.my_votes:
         if my_vote.user_id == current_user_id:
@@ -61,11 +61,11 @@ def accept_answer(current_user_id: int, answer_id: int, db: Session):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail="Accepted Answer unauthorized, check the request")
 
-    # for answer in _answer.question.answers:
-    #     if answer.is_acepted:
-    #         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-    #                             detail="Accepted Answer not update, an answer has already been accepted")
-    print(_answer.question.answers)
+    for answer in _answer.question.answers:
+        if answer.accepted:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                                detail="Accepted Answer not update, an answer has already been accepted")
+
     try:
         db.execute(
             text('CALL atualizarParaMelhorResposta(:answer_id)'), 

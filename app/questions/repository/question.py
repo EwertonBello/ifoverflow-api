@@ -49,7 +49,7 @@ def show(current_user:schemas.ShowUser, id: int, db: Session):
 def search(query:str, db: Session):
     return f"search questions with {query}"
 
-def vote_question(positive:bool=True, current_user_id: int, question_id: int, db: Session):
+def vote_question(positive:bool, current_user_id: int, question_id: int, db: Session):
     _question = db.query(models.Question).filter(models.Question.id == question_id).first()
     for my_vote in _question.my_votes:
         if my_vote.user_id == current_user_id:
