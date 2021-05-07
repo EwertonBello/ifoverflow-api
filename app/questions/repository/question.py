@@ -36,6 +36,13 @@ def show(current_user:schemas.ShowUser, id: int, db: Session):
         _question.my_vote = [vote.vote for vote in _question.my_votes if vote.user_id == current_user_id][0]
     except IndexError:
         pass
+
+    for answer in _question.answers:
+        try:
+            answer.my_vote = [vote.vote for vote in answer.my_votes if vote.user_id == current_user_id][0]
+        except IndexError:
+            pass
+
     _question.is_owner = (current_user_id == _question.user_id)
     return _question
 

@@ -52,7 +52,13 @@ def accept_answer(current_user_id: int, answer_id: int, db: Session):
     _answer = db.query(models.Answer).filter(models.Answer.id == answer_id).first()
     if _answer.question.user_id != current_user_id:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                    detail="Accepted Answer unauthorized, check the request")
+                            detail="Accepted Answer unauthorized, check the request")
+
+    # for answer in _answer.question.answers:
+    #     if answer.is_acepted:
+    #         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+    #                             detail="Accepted Answer not update, an answer has already been accepted")
+    print(_answer.question.answers)
     try:
         db.execute(
             text('CALL atualizarParaMelhorResposta(:answer_id)'), 

@@ -10,6 +10,7 @@ class Answer(Base):
     description = Column('descricao', TEXT(1000))
     votes = Column('votos', INT)
     accepted = Column('aceita', BOOLEAN)
+    my_vote: int = 0
     # --- belongsTo ---
     user_id = Column('Usuarios_id_usuario', INT, ForeignKey('Usuarios.id_usuario'))
     user = relationship("User", back_populates="answers")

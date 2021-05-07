@@ -40,6 +40,7 @@ class ShowAnswer(BaseModel):
     description:str
     votes:int
     accepted:bool
+    my_vote: int
     user: ShowUser
     class Config():
         orm_mode = True
