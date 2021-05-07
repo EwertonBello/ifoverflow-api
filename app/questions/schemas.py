@@ -45,6 +45,7 @@ class ShowAnswer(BaseModel):
         orm_mode = True
 
 class ShowQuestion(ShowBaseQuestion):
+    is_owner: Optional[bool]
     tags: List[ShowTag]
     comments: List[ShowComment]
     answers: List[ShowAnswer]

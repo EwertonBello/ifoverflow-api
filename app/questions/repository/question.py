@@ -25,11 +25,15 @@ def get_all(db: Session):
     questions = db.query(models.Question).all()
     return questions
 
-def show(id: int, db: Session):
+def show(current_user:schemas.ShowUser, id: int, db: Session):
+    current_user_id = current_user.id if current_user else 0
+
     _question = db.query(models.Question).filter(models.Question.id == id).first()
     if not _question:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Question with the id {id} is not available")
+
+    _question.is_owner = (current_user_id == _question.user_id)
     return _question
 
 def search(query:str, db: Session):
