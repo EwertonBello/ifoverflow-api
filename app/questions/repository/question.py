@@ -55,12 +55,12 @@ def vote_question(positive:bool=True, current_user_id: int, question_id: int, db
         if my_vote.user_id == current_user_id:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                                 detail="You can only vote once.")
-    
+
     vote = 1 if positive else (-1)
     try:
         db.execute(
-            text('CALL votarNaPergunta(:question_id, :vote)'), 
-            {'question_id': question_id, 'vote': vote}
+            text('CALL votarNaPergunta(:user_id, :question_id, :vote)'), 
+            {'user_id': current_user_id, 'question_id': question_id, 'vote': vote}
         )
         db.commit()
     except Exception as e:
