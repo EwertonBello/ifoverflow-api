@@ -32,7 +32,13 @@ def show(id: int, db: Session):
                             detail=f"Answer with the id {id} is not available")
     return _answer
 
-def vote_answer(positive:bool=True, answer_id: int, db: Session):
+def vote_answer(positive:bool=True, current_user_id: int, answer_id: int, db: Session):
+    _answer = db.query(models.Answer).filter(models.Answer.id == answer_id).first()
+    for my_vote in _answer.my_votes:
+        if my_vote.user_id == current_user_id:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                                detail="You can only vote once.")
+
     vote = 1 if positive else (-1)
     try:
         db.execute(

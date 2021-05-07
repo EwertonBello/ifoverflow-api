@@ -25,11 +25,11 @@ async def get_answer(id: int, db: Session = Depends(get_db)):
 
 @router.put('/{id}/positive')
 async def vote_positive(id: int, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):
-    return answer.vote_answer(True, id, db)
+    return answer.vote_answer(True, current_user.id, id, db)
 
 @router.put('/{id}/negative')
 async def vote_negative(id: int, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):
-    return answer.vote_answer(False, id, db)
+    return answer.vote_answer(False, current_user.id, id, db)
 
 @router.put('/{id}/accept')
 async def accept_answer(id: int, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):
