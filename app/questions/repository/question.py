@@ -32,6 +32,16 @@ def show(current_user:schemas.ShowUser, id: int, db: Session):
     if not _question:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Question with the id {id} is not available")
+    try:
+        _question.my_vote = [vote.vote for vote in _question.my_votes if vote.user_id == current_user_id][0]
+    except IndexError:
+        pass
+
+    for answer in _question.answers:
+        try:
+            answer.my_vote = [vote.vote for vote in answer.my_votes if vote.user_id == current_user_id][0]
+        except IndexError:
+            pass
 
     _question.is_owner = (current_user_id == _question.user_id)
     return _question
@@ -39,11 +49,18 @@ def show(current_user:schemas.ShowUser, id: int, db: Session):
 def search(query:str, db: Session):
     return f"search questions with {query}"
 
-def vote_question(question_id: int, db: Session):
+def vote_question(positive:bool=True, current_user_id: int, question_id: int, db: Session):
+    _question = db.query(models.Question).filter(models.Question.id == question_id).first()
+    for my_vote in _question.my_votes:
+        if my_vote.user_id == current_user_id:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                                detail="You can only vote once.")
+
+    vote = 1 if positive else (-1)
     try:
         db.execute(
-            text('CALL votarNaPergunta(:question_id)'), 
-            {'question_id': question_id}
+            text('CALL votarNaPergunta(:user_id, :question_id, :vote)'), 
+            {'user_id': current_user_id, 'question_id': question_id, 'vote': vote}
         )
         db.commit()
     except Exception as e:

@@ -40,12 +40,14 @@ class ShowAnswer(BaseModel):
     description:str
     votes:int
     accepted:bool
+    my_vote: int
     user: ShowUser
     class Config():
         orm_mode = True
 
 class ShowQuestion(ShowBaseQuestion):
     is_owner: Optional[bool]
+    my_vote: int
     tags: List[ShowTag]
     comments: List[ShowComment]
     answers: List[ShowAnswer]

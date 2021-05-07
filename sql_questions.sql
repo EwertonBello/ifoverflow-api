@@ -22,7 +22,7 @@ WHERE perguntas.id_pergunta = id_pergunta);
 
 -- RF 05 - 
 DELIMITER //
-CREATE PROCEDURE votarNaPergunta (id_pergunta INT)
+CREATE PROCEDURE votarNaPergunta (id_usuario INT, id_pergunta INT, voto INT)
 BEGIN
 
 DECLARE `_rollback` BOOL DEFAULT 0;
@@ -31,11 +31,14 @@ DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET `_rollback` = 1;
 START TRANSACTION;
   -- LOCALIZO O DO DONO DA PERGUNTA
   SELECT donoDaPergunta(id_pergunta)
-  INTO @id_usuario;
+  INTO @id_usuario_dono;
   -- ATUALIZO O VOTO DO DONO DA PERGUNTA
-  UPDATE usuarios SET usuarios.votos = usuarios.votos + 1 WHERE usuarios.id_usuario = @id_usuario;
+  UPDATE usuarios SET usuarios.votos = usuarios.votos + voto WHERE usuarios.id_usuario = @id_usuario_dono;
   -- ATUALIZO O VOTO DA PERGUNTA
-  UPDATE perguntas SET perguntas.votos = perguntas.votos + 1 WHERE perguntas.id_pergunta = id_pergunta;
+  UPDATE perguntas SET perguntas.votos = perguntas.votos + voto WHERE perguntas.id_pergunta = id_pergunta;
+  -- REGISTRAR VOTO
+  INSERT INTO votos_pergunta (voto, Usuarios_id_usuario, Perguntas_id_pergunta)
+  VALUES (voto, id_usuario, id_pergunta);
 
 IF `_rollback` THEN
     ROLLBACK;
