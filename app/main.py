@@ -17,7 +17,7 @@ from app.config import get_settings
 
 app = FastAPI(
 	title=get_settings().app_name,
-	version="1.8.0"
+	version="1.9.0"
 )
 
 origins = [

@@ -22,7 +22,7 @@ def create(current_user_id:int, request: schemas.Question, db: Session):
                             detail="Question created successfully!")
 
 def get_all(db: Session):
-    questions = db.query(models.Question).all()
+    questions = db.query(models.Question).order_by(models.Question.id.desc()).all()
     return questions
 
 def show(current_user:schemas.ShowUser, id: int, db: Session):
