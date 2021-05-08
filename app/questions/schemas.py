@@ -42,6 +42,7 @@ class ShowAnswer(BaseModel):
     accepted:bool
     my_vote: int
     user: ShowUser
+    comments: List[ShowComment]
     class Config():
         orm_mode = True
 
