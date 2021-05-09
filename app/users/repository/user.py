@@ -35,3 +35,7 @@ def get_by_email(email: str, db: Session):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"User with the email {email} is not available")
     return user
+
+def ranking(db: Session):
+    ranking = db.query(models.User).order_by(models.User.votes.desc()).all()
+    return ranking
