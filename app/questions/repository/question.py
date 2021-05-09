@@ -51,6 +51,9 @@ def search(query:str, db: Session):
 
 def vote_question(positive:bool, current_user_id: int, question_id: int, db: Session):
     _question = db.query(models.Question).filter(models.Question.id == question_id).first()
+
+    not_allow_yourself_to_vote(_question.user_id, current_user_id)
+
     for my_vote in _question.my_votes:
         if my_vote.user_id == current_user_id:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
@@ -70,3 +73,8 @@ def vote_question(positive:bool, current_user_id: int, question_id: int, db: Ses
 
     return HTTPException(status_code=status.HTTP_201_CREATED,
                             detail="Voted successfully!")
+
+def not_allow_yourself_to_vote(user_id:int, current_user_id:int):
+    if user_id == current_user_id:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail="You cannot vote for your post.")
