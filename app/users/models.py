@@ -12,6 +12,9 @@ class User(Base):
     avatar = Column('avatar', VARCHAR(200))
     email = Column('email', VARCHAR(200))
     password = Column('senha', VARCHAR(200))
+
+    count_questions = 0
+    count_answers = 0
     # --- belongsTo ---
     rating_id = Column('Classe_id_classe', INT, ForeignKey('Classes.id_classe'))
     rating = relationship("Rating", back_populates="users")
