@@ -43,6 +43,8 @@ class ShowProfile(BaseModel):
     votes:int
     rating: ShowRating
     campus: ShowCampus
+    count_questions: int
+    count_answers: int
     class Config():
         orm_mode = True
 
