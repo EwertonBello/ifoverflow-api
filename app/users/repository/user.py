@@ -34,6 +34,9 @@ def get_by_email(email: str, db: Session):
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"User with the email {email} is not available")
+
+    user.count_questions = len(user.questions)
+    user.count_answers = len(user.answers)
     return user
 
 def ranking(db: Session):
