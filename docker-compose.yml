@@ -10,4 +10,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - .:/api/data 
+      - data:/var/lib/mysql
+
+volumes:
+  data:
