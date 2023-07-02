@@ -18,9 +18,9 @@ CREATE SCHEMA IF NOT EXISTS `ifoverflow` DEFAULT CHARACTER SET utf8 ;
 USE `ifoverflow` ;
 
 -- -----------------------------------------------------
--- Table `ifoverflow`.`Categorias`
+-- Table `ifoverflow`.`categorias`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ifoverflow`.`Categorias` (
+CREATE TABLE IF NOT EXISTS `ifoverflow`.`categorias` (
   `id_categoria` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(80) NOT NULL,
   PRIMARY KEY (`id_categoria`))
@@ -38,15 +38,15 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `ifoverflow`.`Campus`
+-- Table `ifoverflow`.`campus`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ifoverflow`.`Campus` (
+CREATE TABLE IF NOT EXISTS `ifoverflow`.`campus` (
   `id_campus` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(80) NOT NULL,
   `UF_id_uf` INT NOT NULL,
   PRIMARY KEY (`id_campus`, `UF_id_uf`),
-  INDEX `fk_Campus_UF1_idx` (`UF_id_uf` ASC) VISIBLE,
-  CONSTRAINT `fk_Campus_UF1`
+  INDEX `fk_campus_UF1_idx` (`UF_id_uf` ASC) VISIBLE,
+  CONSTRAINT `fk_campus_UF1`
     FOREIGN KEY (`UF_id_uf`)
     REFERENCES `ifoverflow`.`UF` (`id_uf`)
     ON DELETE CASCADE
@@ -55,9 +55,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `ifoverflow`.`Classes`
+-- Table `ifoverflow`.`classes`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ifoverflow`.`Classes` (
+CREATE TABLE IF NOT EXISTS `ifoverflow`.`classes` (
   `id_classe` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(80) NOT NULL,
   `descricao` TEXT NOT NULL,
@@ -67,89 +67,89 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `ifoverflow`.`Usuarios`
+-- Table `ifoverflow`.`usuarios`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ifoverflow`.`Usuarios` (
+CREATE TABLE IF NOT EXISTS `ifoverflow`.`usuarios` (
   `id_usuario` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(80) NOT NULL,
   `votos` INT NOT NULL DEFAULT 0,
   `avatar` VARCHAR(200) NOT NULL,
   `email` VARCHAR(200) NOT NULL,
   `senha` VARCHAR(200) NOT NULL,
-  `Campus_id_campus` INT NOT NULL,
+  `campus_id_campus` INT NOT NULL,
   `Classe_id_classe` INT NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id_usuario`, `Campus_id_campus`, `Classe_id_classe`),
-  INDEX `fk_Usuarios_Campus1_idx` (`Campus_id_campus` ASC) VISIBLE,
-  INDEX `fk_Usuarios_Classe1_idx` (`Classe_id_classe` ASC) VISIBLE,
-  CONSTRAINT `fk_Usuarios_Campus1`
-    FOREIGN KEY (`Campus_id_campus`)
-    REFERENCES `ifoverflow`.`Campus` (`id_campus`)
+  PRIMARY KEY (`id_usuario`, `campus_id_campus`, `Classe_id_classe`),
+  INDEX `fk_usuarios_campus1_idx` (`campus_id_campus` ASC) VISIBLE,
+  INDEX `fk_usuarios_Classe1_idx` (`Classe_id_classe` ASC) VISIBLE,
+  CONSTRAINT `fk_usuarios_campus1`
+    FOREIGN KEY (`campus_id_campus`)
+    REFERENCES `ifoverflow`.`campus` (`id_campus`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_Usuarios_Classe1`
+  CONSTRAINT `fk_usuarios_Classe1`
     FOREIGN KEY (`Classe_id_classe`)
-    REFERENCES `ifoverflow`.`Classes` (`id_classe`)
+    REFERENCES `ifoverflow`.`classes` (`id_classe`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `ifoverflow`.`Perguntas`
+-- Table `ifoverflow`.`perguntas`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ifoverflow`.`Perguntas` (
+CREATE TABLE IF NOT EXISTS `ifoverflow`.`perguntas` (
   `id_pergunta` INT NOT NULL AUTO_INCREMENT,
   `assunto` VARCHAR(100) NOT NULL,
   `descricao` TEXT(1000) NOT NULL,
   `votos` INT NOT NULL DEFAULT 0,
-  `Categorias_id_categoria` INT NOT NULL,
-  `Usuarios_id_usuario` INT NOT NULL,
-  PRIMARY KEY (`id_pergunta`, `Categorias_id_categoria`, `Usuarios_id_usuario`),
-  INDEX `fk_Perguntas_Categorias2_idx` (`Categorias_id_categoria` ASC) VISIBLE,
-  INDEX `fk_Perguntas_Usuarios1_idx` (`Usuarios_id_usuario` ASC) VISIBLE,
-  CONSTRAINT `fk_Perguntas_Categorias2`
-    FOREIGN KEY (`Categorias_id_categoria`)
-    REFERENCES `ifoverflow`.`Categorias` (`id_categoria`)
+  `categorias_id_categoria` INT NOT NULL,
+  `usuarios_id_usuario` INT NOT NULL,
+  PRIMARY KEY (`id_pergunta`, `categorias_id_categoria`, `usuarios_id_usuario`),
+  INDEX `fk_perguntas_categorias2_idx` (`categorias_id_categoria` ASC) VISIBLE,
+  INDEX `fk_perguntas_usuarios1_idx` (`usuarios_id_usuario` ASC) VISIBLE,
+  CONSTRAINT `fk_perguntas_categorias2`
+    FOREIGN KEY (`categorias_id_categoria`)
+    REFERENCES `ifoverflow`.`categorias` (`id_categoria`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_Perguntas_Usuarios1`
-    FOREIGN KEY (`Usuarios_id_usuario`)
-    REFERENCES `ifoverflow`.`Usuarios` (`id_usuario`)
+  CONSTRAINT `fk_perguntas_usuarios1`
+    FOREIGN KEY (`usuarios_id_usuario`)
+    REFERENCES `ifoverflow`.`usuarios` (`id_usuario`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `ifoverflow`.`Respostas`
+-- Table `ifoverflow`.`respostas`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ifoverflow`.`Respostas` (
+CREATE TABLE IF NOT EXISTS `ifoverflow`.`respostas` (
   `id_resposta` INT NOT NULL AUTO_INCREMENT,
   `descricao` TEXT(1000) NOT NULL,
   `votos` INT NOT NULL DEFAULT 0,
   `aceita` TINYINT NOT NULL DEFAULT 0,
-  `Usuarios_id_usuario` INT NOT NULL,
-  `Perguntas_id_pergunta` INT NOT NULL,
-  PRIMARY KEY (`id_resposta`, `Usuarios_id_usuario`, `Perguntas_id_pergunta`),
-  INDEX `fk_Respostas_Usuarios1_idx` (`Usuarios_id_usuario` ASC) VISIBLE,
-  INDEX `fk_Respostas_Perguntas1_idx` (`Perguntas_id_pergunta` ASC) VISIBLE,
-  CONSTRAINT `fk_Respostas_Usuarios1`
-    FOREIGN KEY (`Usuarios_id_usuario`)
-    REFERENCES `ifoverflow`.`Usuarios` (`id_usuario`)
+  `usuarios_id_usuario` INT NOT NULL,
+  `perguntas_id_pergunta` INT NOT NULL,
+  PRIMARY KEY (`id_resposta`, `usuarios_id_usuario`, `perguntas_id_pergunta`),
+  INDEX `fk_respostas_usuarios1_idx` (`usuarios_id_usuario` ASC) VISIBLE,
+  INDEX `fk_respostas_perguntas1_idx` (`perguntas_id_pergunta` ASC) VISIBLE,
+  CONSTRAINT `fk_respostas_usuarios1`
+    FOREIGN KEY (`usuarios_id_usuario`)
+    REFERENCES `ifoverflow`.`usuarios` (`id_usuario`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_Respostas_Perguntas1`
-    FOREIGN KEY (`Perguntas_id_pergunta`)
-    REFERENCES `ifoverflow`.`Perguntas` (`id_pergunta`)
+  CONSTRAINT `fk_respostas_perguntas1`
+    FOREIGN KEY (`perguntas_id_pergunta`)
+    REFERENCES `ifoverflow`.`perguntas` (`id_pergunta`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `ifoverflow`.`Tags`
+-- Table `ifoverflow`.`tags`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ifoverflow`.`Tags` (
+CREATE TABLE IF NOT EXISTS `ifoverflow`.`tags` (
   `id_tag` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(80) NOT NULL,
   PRIMARY KEY (`id_tag`))
@@ -157,118 +157,118 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `ifoverflow`.`Tags_Perguntas`
+-- Table `ifoverflow`.`tags_perguntas`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ifoverflow`.`Tags_Perguntas` (
-  `Tags_id_tag` INT NOT NULL,
-  `Perguntas_id_pergunta` INT NOT NULL,
-  PRIMARY KEY (`Tags_id_tag`, `Perguntas_id_pergunta`),
-  INDEX `fk_Tags_has_Perguntas_Perguntas1_idx` (`Perguntas_id_pergunta` ASC) VISIBLE,
-  INDEX `fk_Tags_has_Perguntas_Tags1_idx` (`Tags_id_tag` ASC) VISIBLE,
-  CONSTRAINT `fk_Tags_has_Perguntas_Tags1`
-    FOREIGN KEY (`Tags_id_tag`)
-    REFERENCES `ifoverflow`.`Tags` (`id_tag`)
+CREATE TABLE IF NOT EXISTS `ifoverflow`.`tags_perguntas` (
+  `tags_id_tag` INT NOT NULL,
+  `perguntas_id_pergunta` INT NOT NULL,
+  PRIMARY KEY (`tags_id_tag`, `perguntas_id_pergunta`),
+  INDEX `fk_tags_has_perguntas_perguntas1_idx` (`perguntas_id_pergunta` ASC) VISIBLE,
+  INDEX `fk_tags_has_perguntas_tags1_idx` (`tags_id_tag` ASC) VISIBLE,
+  CONSTRAINT `fk_tags_has_perguntas_tags1`
+    FOREIGN KEY (`tags_id_tag`)
+    REFERENCES `ifoverflow`.`tags` (`id_tag`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Tags_has_Perguntas_Perguntas1`
-    FOREIGN KEY (`Perguntas_id_pergunta`)
-    REFERENCES `ifoverflow`.`Perguntas` (`id_pergunta`)
+  CONSTRAINT `fk_tags_has_perguntas_perguntas1`
+    FOREIGN KEY (`perguntas_id_pergunta`)
+    REFERENCES `ifoverflow`.`perguntas` (`id_pergunta`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `ifoverflow`.`Comentarios_Pergunta`
+-- Table `ifoverflow`.`comentarios_pergunta`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ifoverflow`.`Comentarios_Pergunta` (
+CREATE TABLE IF NOT EXISTS `ifoverflow`.`comentarios_pergunta` (
   `id_comentarios_pergunta` INT NOT NULL AUTO_INCREMENT,
   `descricao` TEXT(1000) NOT NULL,
-  `Usuarios_id_usuario` INT NOT NULL,
-  `Perguntas_id_pergunta` INT NOT NULL,
-  PRIMARY KEY (`id_comentarios_pergunta`, `Usuarios_id_usuario`, `Perguntas_id_pergunta`),
-  INDEX `fk_Comentarios_Pergunta_Usuarios1_idx` (`Usuarios_id_usuario` ASC) VISIBLE,
-  INDEX `fk_Comentarios_Pergunta_Perguntas1_idx` (`Perguntas_id_pergunta` ASC) VISIBLE,
-  CONSTRAINT `fk_Comentarios_Pergunta_Usuarios1`
-    FOREIGN KEY (`Usuarios_id_usuario`)
-    REFERENCES `ifoverflow`.`Usuarios` (`id_usuario`)
+  `usuarios_id_usuario` INT NOT NULL,
+  `perguntas_id_pergunta` INT NOT NULL,
+  PRIMARY KEY (`id_comentarios_pergunta`, `usuarios_id_usuario`, `perguntas_id_pergunta`),
+  INDEX `fk_comentarios_pergunta_usuarios1_idx` (`usuarios_id_usuario` ASC) VISIBLE,
+  INDEX `fk_comentarios_pergunta_perguntas1_idx` (`perguntas_id_pergunta` ASC) VISIBLE,
+  CONSTRAINT `fk_comentarios_pergunta_usuarios1`
+    FOREIGN KEY (`usuarios_id_usuario`)
+    REFERENCES `ifoverflow`.`usuarios` (`id_usuario`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_Comentarios_Pergunta_Perguntas1`
-    FOREIGN KEY (`Perguntas_id_pergunta`)
-    REFERENCES `ifoverflow`.`Perguntas` (`id_pergunta`)
+  CONSTRAINT `fk_comentarios_pergunta_perguntas1`
+    FOREIGN KEY (`perguntas_id_pergunta`)
+    REFERENCES `ifoverflow`.`perguntas` (`id_pergunta`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `ifoverflow`.`Comentarios_Resposta`
+-- Table `ifoverflow`.`comentarios_resposta`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ifoverflow`.`Comentarios_Resposta` (
+CREATE TABLE IF NOT EXISTS `ifoverflow`.`comentarios_resposta` (
   `id_comentarios_resposta` INT NOT NULL AUTO_INCREMENT,
   `descricao` TEXT(1000) NOT NULL,
-  `Usuarios_id_usuario` INT NOT NULL,
-  `Respostas_id_resposta` INT NOT NULL,
-  PRIMARY KEY (`id_comentarios_resposta`, `Usuarios_id_usuario`, `Respostas_id_resposta`),
-  INDEX `fk_Comentarios_Resposta_Usuarios1_idx` (`Usuarios_id_usuario` ASC) VISIBLE,
-  INDEX `fk_Comentarios_Resposta_Respostas1_idx` (`Respostas_id_resposta` ASC) VISIBLE,
-  CONSTRAINT `fk_Comentarios_Resposta_Usuarios1`
-    FOREIGN KEY (`Usuarios_id_usuario`)
-    REFERENCES `ifoverflow`.`Usuarios` (`id_usuario`)
+  `usuarios_id_usuario` INT NOT NULL,
+  `respostas_id_resposta` INT NOT NULL,
+  PRIMARY KEY (`id_comentarios_resposta`, `usuarios_id_usuario`, `respostas_id_resposta`),
+  INDEX `fk_comentarios_resposta_usuarios1_idx` (`usuarios_id_usuario` ASC) VISIBLE,
+  INDEX `fk_comentarios_resposta_respostas1_idx` (`respostas_id_resposta` ASC) VISIBLE,
+  CONSTRAINT `fk_comentarios_resposta_usuarios1`
+    FOREIGN KEY (`usuarios_id_usuario`)
+    REFERENCES `ifoverflow`.`usuarios` (`id_usuario`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_Comentarios_Resposta_Respostas1`
-    FOREIGN KEY (`Respostas_id_resposta`)
-    REFERENCES `ifoverflow`.`Respostas` (`id_resposta`)
+  CONSTRAINT `fk_comentarios_resposta_respostas1`
+    FOREIGN KEY (`respostas_id_resposta`)
+    REFERENCES `ifoverflow`.`respostas` (`id_resposta`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `ifoverflow`.`Votos_Resposta`
+-- Table `ifoverflow`.`votos_resposta`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ifoverflow`.`Votos_Resposta` (
+CREATE TABLE IF NOT EXISTS `ifoverflow`.`votos_resposta` (
   `id_votos_resposta` INT NOT NULL AUTO_INCREMENT,
   `voto` TINYINT NOT NULL,
-  `Usuarios_id_usuario` INT NOT NULL,
-  `Respostas_id_resposta` INT NOT NULL,
-  PRIMARY KEY (`id_votos_resposta`, `Usuarios_id_usuario`, `Respostas_id_resposta`),
-  INDEX `fk_Votos_Resposta_Usuarios1_idx` (`Usuarios_id_usuario` ASC) VISIBLE,
-  INDEX `fk_Votos_Resposta_Respostas1_idx` (`Respostas_id_resposta` ASC) VISIBLE,
-  CONSTRAINT `fk_Votos_Resposta_Usuarios1`
-    FOREIGN KEY (`Usuarios_id_usuario`)
-    REFERENCES `ifoverflow`.`Usuarios` (`id_usuario`)
+  `usuarios_id_usuario` INT NOT NULL,
+  `respostas_id_resposta` INT NOT NULL,
+  PRIMARY KEY (`id_votos_resposta`, `usuarios_id_usuario`, `respostas_id_resposta`),
+  INDEX `fk_votos_resposta_usuarios1_idx` (`usuarios_id_usuario` ASC) VISIBLE,
+  INDEX `fk_votos_resposta_respostas1_idx` (`respostas_id_resposta` ASC) VISIBLE,
+  CONSTRAINT `fk_votos_resposta_usuarios1`
+    FOREIGN KEY (`usuarios_id_usuario`)
+    REFERENCES `ifoverflow`.`usuarios` (`id_usuario`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Votos_Resposta_Respostas1`
-    FOREIGN KEY (`Respostas_id_resposta`)
-    REFERENCES `ifoverflow`.`Respostas` (`id_resposta`)
+  CONSTRAINT `fk_votos_resposta_respostas1`
+    FOREIGN KEY (`respostas_id_resposta`)
+    REFERENCES `ifoverflow`.`respostas` (`id_resposta`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `ifoverflow`.`Votos_Pergunta`
+-- Table `ifoverflow`.`votos_pergunta`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ifoverflow`.`Votos_Pergunta` (
+CREATE TABLE IF NOT EXISTS `ifoverflow`.`votos_pergunta` (
   `id_votos_pergunta` INT NOT NULL AUTO_INCREMENT,
   `voto` TINYINT NOT NULL,
-  `Usuarios_id_usuario` INT NOT NULL,
-  `Perguntas_id_pergunta` INT NOT NULL,
-  PRIMARY KEY (`id_votos_pergunta`, `Usuarios_id_usuario`, `Perguntas_id_pergunta`),
-  INDEX `fk_Votos_Resposta_Usuarios1_idx` (`Usuarios_id_usuario` ASC) VISIBLE,
-  INDEX `fk_Votos_Pergunta_Perguntas1_idx` (`Perguntas_id_pergunta` ASC) VISIBLE,
-  CONSTRAINT `fk_Votos_Resposta_Usuarios10`
-    FOREIGN KEY (`Usuarios_id_usuario`)
-    REFERENCES `ifoverflow`.`Usuarios` (`id_usuario`)
+  `usuarios_id_usuario` INT NOT NULL,
+  `perguntas_id_pergunta` INT NOT NULL,
+  PRIMARY KEY (`id_votos_pergunta`, `usuarios_id_usuario`, `perguntas_id_pergunta`),
+  INDEX `fk_votos_resposta_usuarios1_idx` (`usuarios_id_usuario` ASC) VISIBLE,
+  INDEX `fk_votos_pergunta_perguntas1_idx` (`perguntas_id_pergunta` ASC) VISIBLE,
+  CONSTRAINT `fk_votos_resposta_usuarios10`
+    FOREIGN KEY (`usuarios_id_usuario`)
+    REFERENCES `ifoverflow`.`usuarios` (`id_usuario`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Votos_Pergunta_Perguntas1`
-    FOREIGN KEY (`Perguntas_id_pergunta`)
-    REFERENCES `ifoverflow`.`Perguntas` (`id_pergunta`)
+  CONSTRAINT `fk_votos_pergunta_perguntas1`
+    FOREIGN KEY (`perguntas_id_pergunta`)
+    REFERENCES `ifoverflow`.`perguntas` (`id_pergunta`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -277,6 +277,7 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
 
 -- REGRAS
 
@@ -471,3 +472,188 @@ BEGIN
   WHERE respostas.id_resposta = id_resposta;
 END $$
 DELIMITER ;
+
+
+-- POPULAR TABELAS
+
+INSERT INTO UF(nome)
+VALUES
+('AC'),('AL'),('AP'),('AM'),('BA'),
+('CE'),('ES'),('GO'),('MA'),('MT'),
+('MS'),('MG'),('PA'),('PB'),('PR'),
+('PE'),('PI'),('RJ'),('RN'),('RS'),
+('RO'),('RR'),('SC'),('SP'),('SE'),
+('TO'),('DF');
+
+INSERT INTO campus(nome, UF_id_uf)
+VALUES
+('Abaetetuba', 13),('Araraquara', 24),
+('Altamira', 13),('Avançado Fernandópolis', 24),
+('Ananindeua', 13),('Avançado Ilha Solteira', 24),
+('Belém', 13),('Avançado Jundiaí', 24),
+('Bragança', 13),('Avançado São Miguel Paulista', 24),
+('Breves', 13),('Avançado Tupã', 24),
+('Cametá', 13),('Avaré', 24),
+('Castanhal', 13),('Barretos', 24),
+('Itaituba', 13),('Birigui', 24),
+('Conceição Araguaia', 13),('Bragança Paulista', 24),
+('Marabá Industrial', 13),('Campinas', 24),
+('Rural Marabá', 13),('Campos do Jordão', 24),
+('Óbidos', 13),('Caraguatatuba', 24),
+('Paragominas', 13),('Catanduva', 24),
+('Parauapebas', 13),('Cubatão', 24),
+('Santarém', 13),('Guarulhos', 24),
+('Tucuruí', 13),('Hortolândia', 24),
+('Vigia', 13),('Itapetininga', 24),
+('Itaquaquecetuba', 24),
+('Jacarei', 24),
+('Matão', 24),
+('Piracicaba', 24),
+('Pirituba', 24),
+('Presidente Epitácio', 24),
+('Registro', 24),
+('Salto', 24),
+('São Carlos', 24),
+('São João da Boa Vista', 24),
+('São José dos Campos', 24),
+('São Paulo', 24),
+('São Roque', 24),
+('Sertãozinho', 24),
+('Sorocaba', 24),
+('Suzano', 24),
+('Votuporanga', 24);
+
+INSERT INTO classes(nome,descricao,limite) 
+VALUES
+('Novato','Classe inicial',0),
+('Curioso','Quando alcança 10 votos',10),
+('Estudante','Quando alcança 20 votos',20),
+('Entusiasta','Quando alcança 30 votos',30),
+('Nerd','Quando alcança 40 votos',40),
+('Professor','Quando alcança 50 votos',50),
+('Especialista','Quando alcança 60 votos',60),
+('Sábio','Quando alcança 70 votos',70),
+('Mestre','Quando alcança 80 votos',80),
+('Doutor','Quando alcança 90 votos',90),
+('God','Quando alcança 100 votos',100);
+
+INSERT INTO usuarios(nome,avatar,email,senha,Campus_id_campus) 
+VALUES
+('Steve Wozniak', 'https://pngimage.net/wp-content/uploads/2018/05/default-user-profile-image-png-7.png', 'steve@ifoverflow.com','secret',1),
+('Bill Gates', 'https://pngimage.net/wp-content/uploads/2018/05/default-user-profile-image-png-7.png', 'bill@ifoverflow.com','secret',2),
+('Paul Allen', 'https://pngimage.net/wp-content/uploads/2018/05/default-user-profile-image-png-7.png', 'paul@ifoverflow.com','secret',3),
+('Linus Torvalds', 'https://pngimage.net/wp-content/uploads/2018/05/default-user-profile-image-png-7.png', 'linus@ifoverflow.com','secret',4),
+('Steve Jobs', 'https://pngimage.net/wp-content/uploads/2018/05/default-user-profile-image-png-7.png', 'steve@ifoverflow.com','secret',5),
+('Yukihiro Matsumoto', 'https://pngimage.net/wp-content/uploads/2018/05/default-user-profile-image-png-7.png', 'yukihiro@ifoverflow.com','secret',6),
+('Rasmus Lerdorf', 'https://pngimage.net/wp-content/uploads/2018/05/default-user-profile-image-png-7.png', 'rasmus@ifoverflow.com','secret',7),
+('Dennis Ritchie', 'https://pngimage.net/wp-content/uploads/2018/05/default-user-profile-image-png-7.png', 'dennis@ifoverflow.com','secret',8),
+('James Gosling', 'https://pngimage.net/wp-content/uploads/2018/05/default-user-profile-image-png-7.png', 'james@ifoverflow.com','secret',9),
+('Guido van Rossum', 'https://pngimage.net/wp-content/uploads/2018/05/default-user-profile-image-png-7.png', 'guido@ifoverflow.com','secret',10);
+
+INSERT INTO categorias(nome)
+VALUES
+('Artes e Humanidades'),
+('Carros e Transportes'),
+('Casa e Jardim'),
+('Ciências Sociais'),
+('Ciências e Matemática'),
+('Comidas e Bebidas'),
+('Tecnologia da Informação'),
+('Ecologia e Meio Ambiente'),
+('Eletrônicos'),
+('Esportes'),
+('Governo e Política'),
+('Negócios Regionais'),
+('Negócios e Finanças'),
+('Saúde'),
+('Sociedade e Cultura');
+
+INSERT INTO tags(nome)
+VALUES
+('Python'),('Java'),('Estrutura de Dados'),('Banco de Dados'),
+('MySQL'),('Cálculo'),('JavaScript'),('Engenharia de Software'),
+('IA'),('Machine Learning'),('Deep Learning'),('Kotlin'),('PHP');
+
+INSERT INTO perguntas(assunto,descricao,Categorias_id_categoria,Usuarios_id_usuario) 
+VALUES
+('O que usar no lugar do header php?','Estou com problema ao redirecionar com php, queria saber se existe alguma alternativa ao header',13,1),
+('como popular bd em 5min?', 'to demorando', 4, 2),
+('Como instalar um pacote manualmente em um projeto React Native?','Preciso instalar um pacote no meu projeto React Native, mas ao utilizar o comando npm para instalação:
+
+npm install react-native-threatmetrix --save
+Recebo o seguinte erro como resposta:
+
+npm ERR! code ENOVERSIONS
+npm ERR! No valid versions available for react-native-threatmetrix
+Logo, parece não haver mais uma versão do pacote disponível. Mas tenho acesso ao projeto no GitHub (https://github.com/teopeurt/react-native-threatmetrix), e queria saber, se possível, como faço para instalá-lo manualmente.',7,3),
+('pq python n tem ;?', 'tô curioso', 1, 5),
+('Quantos MB tem um hello world em Java?', 'me veio essa dúvida antes de dormir', 2, 3),
+('por onde começar a estudar estrutura de dados?', 'n quero reprovar na andrea', 3, 7),
+('qual a importância do cálculo na programação?', 'pareço estar perdendo tempo com neves', 6, 1),
+('Como faço uma IA com python?','Quero fazer uma skynet só',9,8),
+('vale a pena aprender php em 2020?', 'vi no YouTube q já morreu', 13, 2),
+('Como faz um diagrama de causa e efeito?','Se puderem mostrar exemplos...',8,9);
+
+INSERT INTO tags_perguntas(Tags_id_tag, Perguntas_id_pergunta)
+VALUES
+(13,1),
+(14,1),
+(4,2),
+(5,2),
+(7,3),
+(8,3),
+(1,4),
+(2,4),
+(2,5),
+(3,5),
+(3,6),
+(4,6),
+(6,7),
+(7,7),
+(9,8),
+(10,8),
+(13,9),
+(14,9),
+(8,10),
+(9,10);
+
+INSERT INTO respostas(descricao,Usuarios_id_usuario,Perguntas_id_pergunta)
+VALUES
+('Faz um echo com um redirecionamento javascript',1,1),
+('cria um bot', 2,2),
+('pq guido quis assim', 5,3),
+('50 MB aproximadamente', 3,4),
+('fila circular', 7,5),
+('matematica e programação são tico e teco', 1,6),
+('estudando', 8,7),
+('vale', 9,8),
+('Baixa o pacote e põe na raiz do teu projeto',6,9),
+('vai no google imagens, ta cheio de exemplos', 1, 10);
+
+
+INSERT INTO comentarios_pergunta(descricao,Usuarios_id_usuario, Perguntas_id_pergunta) 
+VALUES
+('Problema na identação do código',10,10),
+('Obrigado',1,1),
+('Tá faltando o ;',2,2),
+('Ainda não funcionou',3,3),
+('Tenta reiniciar',2,2),
+('Agora funcionou',2,2),
+('Tá fora do for',5,5),
+('Instala com o pip',10,10),
+('Precisa calcular o x',7,7),
+('Não entendi',8,8);
+
+INSERT INTO comentarios_resposta(descricao, Usuarios_id_usuario, Respostas_id_resposta)
+VALUES
+('resposta horrível', 1,1),
+('top', 2,2),
+('vdd', 3,3),
+('ajudou', 4,4),
+('ai manja', 5,5),
+('miseravel é um gênio', 6,6),
+('bora estudar mais', 7,7),
+('obg pela resposta', 8,8),
+('mas e dps?', 9,9),
+('ai sim hein cara', 10,10);
+
