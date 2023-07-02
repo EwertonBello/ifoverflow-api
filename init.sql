@@ -572,7 +572,7 @@ INSERT INTO tags(nome)
 VALUES
 ('Python'),('Java'),('Estrutura de Dados'),('Banco de Dados'),
 ('MySQL'),('Cálculo'),('JavaScript'),('Engenharia de Software'),
-('IA'),('Machine Learning'),('Deep Learning'),('Kotlin'),('PHP');
+('IA'),('Machine Learning'),('Deep Learning'),('Kotlin'),('PHP'),('TypeScript');
 
 INSERT INTO perguntas(assunto,descricao,Categorias_id_categoria,Usuarios_id_usuario) 
 VALUES
@@ -594,7 +594,7 @@ Logo, parece não haver mais uma versão do pacote disponível. Mas tenho acesso
 ('vale a pena aprender php em 2020?', 'vi no YouTube q já morreu', 13, 2),
 ('Como faz um diagrama de causa e efeito?','Se puderem mostrar exemplos...',8,9);
 
-INSERT INTO tags_perguntas(Tags_id_tag, Perguntas_id_pergunta)
+INSERT INTO tags_perguntas(tags_id_tag, perguntas_id_pergunta)
 VALUES
 (13,1),
 (14,1),
