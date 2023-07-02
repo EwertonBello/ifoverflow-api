@@ -23,6 +23,9 @@ app = FastAPI(
 origins = [
     "http://localhost",
     "http://localhost:3000",
+    "https://localhost:3000",
+    "https://nexus-pgthiago.vercel.app",
+    "http://nexus-pgthiago.vercel.app",
 ]
 
 app.add_middleware(

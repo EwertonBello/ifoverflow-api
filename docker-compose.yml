@@ -3,7 +3,7 @@ version: '3.8'
 services:
   db:
     image: mysql:latest
-    command: --default-authentication-plugin=mysql_native_password # --init-file /data/application/init.sql
+    command: --default-authentication-plugin=mysql_native_password --init-file /data/application/init.sql
     container_name: MYSQL-API-BACKEND
     env_file:
       - ./.env
@@ -11,7 +11,8 @@ services:
       - "3366:3306"
     volumes:
       - data:/var/lib/mysql
-      # - ./init.sql:/data/application/init.sql
+      - ./mysql/data/conf.d:/etc/mysql/conf.d
+      - ./mysql/data/init.sql:/data/application/init.sql
 
   ifoverflow:
     container_name: ifoverflow
