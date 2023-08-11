@@ -49,7 +49,7 @@ class ShowAnswer(BaseModel):
 class ShowQuestion(ShowBaseQuestion):
     is_owner: Optional[bool]
     my_vote: int
-    tags: List[ShowTag]
+    # tags: List[ShowTag]
     comments: List[ShowComment]
     answers: List[ShowAnswer]
     class Config():
