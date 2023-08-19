@@ -23,7 +23,7 @@ USE `ifoverflow` ;
 CREATE TABLE IF NOT EXISTS `ifoverflow`.`categorias` (
   `id_categoria` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(80) NOT NULL,
-  PRIMARY KEY (`id_categoria`))
+  PRIMARY KEY (`id_categoria`)) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci
 ENGINE = InnoDB;
 
 
@@ -33,7 +33,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `ifoverflow`.`UF` (
   `id_uf` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(80) NOT NULL,
-  PRIMARY KEY (`id_uf`))
+  PRIMARY KEY (`id_uf`)) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci
 ENGINE = InnoDB;
 
 
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `ifoverflow`.`campus` (
     FOREIGN KEY (`UF_id_uf`)
     REFERENCES `ifoverflow`.`UF` (`id_uf`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON UPDATE CASCADE) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci
 ENGINE = InnoDB;
 
 
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `ifoverflow`.`classes` (
   `nome` VARCHAR(80) NOT NULL,
   `descricao` TEXT NOT NULL,
   `limite` INT NOT NULL,
-  PRIMARY KEY (`id_classe`))
+  PRIMARY KEY (`id_classe`)) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci
 ENGINE = InnoDB;
 
 
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `ifoverflow`.`usuarios` (
     FOREIGN KEY (`Classe_id_classe`)
     REFERENCES `ifoverflow`.`classes` (`id_classe`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci
 ENGINE = InnoDB;
 
 
@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `ifoverflow`.`perguntas` (
     FOREIGN KEY (`usuarios_id_usuario`)
     REFERENCES `ifoverflow`.`usuarios` (`id_usuario`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON UPDATE CASCADE) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci
 ENGINE = InnoDB;
 
 
@@ -142,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `ifoverflow`.`respostas` (
     FOREIGN KEY (`perguntas_id_pergunta`)
     REFERENCES `ifoverflow`.`perguntas` (`id_pergunta`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON UPDATE CASCADE) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci
 ENGINE = InnoDB;
 
 
@@ -152,7 +152,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `ifoverflow`.`tags` (
   `id_tag` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(80) NOT NULL,
-  PRIMARY KEY (`id_tag`))
+  PRIMARY KEY (`id_tag`)) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci
 ENGINE = InnoDB;
 
 
@@ -174,7 +174,7 @@ CREATE TABLE IF NOT EXISTS `ifoverflow`.`tags_perguntas` (
     FOREIGN KEY (`perguntas_id_pergunta`)
     REFERENCES `ifoverflow`.`perguntas` (`id_pergunta`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci
 ENGINE = InnoDB;
 
 
@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `ifoverflow`.`comentarios_pergunta` (
     FOREIGN KEY (`perguntas_id_pergunta`)
     REFERENCES `ifoverflow`.`perguntas` (`id_pergunta`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON UPDATE CASCADE) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci
 ENGINE = InnoDB;
 
 
@@ -222,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `ifoverflow`.`comentarios_resposta` (
     FOREIGN KEY (`respostas_id_resposta`)
     REFERENCES `ifoverflow`.`respostas` (`id_resposta`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON UPDATE CASCADE) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci
 ENGINE = InnoDB;
 
 
@@ -246,7 +246,7 @@ CREATE TABLE IF NOT EXISTS `ifoverflow`.`votos_resposta` (
     FOREIGN KEY (`respostas_id_resposta`)
     REFERENCES `ifoverflow`.`respostas` (`id_resposta`)
     ON DELETE CASCADE
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci
 ENGINE = InnoDB;
 
 
@@ -270,7 +270,7 @@ CREATE TABLE IF NOT EXISTS `ifoverflow`.`votos_pergunta` (
     FOREIGN KEY (`perguntas_id_pergunta`)
     REFERENCES `ifoverflow`.`perguntas` (`id_pergunta`)
     ON DELETE CASCADE
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci
 ENGINE = InnoDB;
 
 
