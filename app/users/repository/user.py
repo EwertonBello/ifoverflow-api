@@ -9,6 +9,9 @@ from app.users.hashing import Hash
 def register(request: schemas.User, db: Session):
     request.password=Hash.bcrypt(request.password)
     new_user = request.dict()
+    if db.query(models.User).filter(models.User.email == new_user.email).first():
+        return HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                                detail="User already exists!")
     try:
         db.execute(
             text('CALL cadastrarUsuario(:name, :avatar, :email, :password, :campus_id)'), 
