@@ -27,8 +27,7 @@ async def get_questions(db: Session = Depends(get_db)):
 async def get_question(id: int, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user_or_none)):
     return question.show(current_user, id, db)
 
-# @router.get('/{query}', response_model=List[ShowBaseQuestion])
-@router.get('/search/{query}')
+@router.get('/search/{query}', response_model=List[ShowBaseQuestion])
 async def search_questions(query: str, db: Session = Depends(get_db)):
     return question.search(query, db)
 

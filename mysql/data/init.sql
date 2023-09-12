@@ -14,7 +14,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema ifoverflow
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `ifoverflow` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `ifoverflow` DEFAULT CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci;
 USE `ifoverflow` ;
 
 -- -----------------------------------------------------
@@ -22,9 +22,9 @@ USE `ifoverflow` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ifoverflow`.`categorias` (
   `id_categoria` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(80) NOT NULL,
+  `nome` VARCHAR(80) NOT NULL COLLATE utf8mb3_general_ci,
   PRIMARY KEY (`id_categoria`))
-ENGINE = InnoDB;
+ENGINE = InnoDB CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci;
 
 
 -- -----------------------------------------------------

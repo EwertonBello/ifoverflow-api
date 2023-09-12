@@ -47,7 +47,8 @@ def show(current_user:schemas.ShowUser, id: int, db: Session):
     return _question
 
 def search(query:str, db: Session):
-    return f"search questions with {query}"
+    questions = db.query(models.Question).filter(models.Question.title.ilike(f'%{query}%')).order_by(models.Question.id.desc()).all()
+    return questions
 
 def vote_question(positive:bool, current_user_id: int, question_id: int, db: Session):
     _question = db.query(models.Question).filter(models.Question.id == question_id).first()
