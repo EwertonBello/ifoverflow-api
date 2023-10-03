@@ -54,7 +54,7 @@ def vote_answer(positive:bool, current_user_id: int, answer_id: int, db: Session
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                             detail="Votes not update, check the request and try again")
 
-    return HTTPException(status_code=status.HTTP_201_CREATED,
+    raise HTTPException(status_code=status.HTTP_201_CREATED,
                             detail="Voted successfully!")
 
 def accept_answer(current_user_id: int, answer_id: int, db: Session):
@@ -80,7 +80,7 @@ def accept_answer(current_user_id: int, answer_id: int, db: Session):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                             detail="Accepted Answer not update, check the request and try again")
 
-    return HTTPException(status_code=status.HTTP_201_CREATED,
+    raise HTTPException(status_code=status.HTTP_201_CREATED,
                             detail="Accepted Answer successfully!")
 
 def not_allow_yourself_to_vote(user_id:int, current_user_id:int):

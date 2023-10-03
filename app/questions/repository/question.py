@@ -18,7 +18,7 @@ def create(current_user_id:int, request: schemas.Question, db: Session):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                             detail="Question not created, check the request body and try again")
 
-    return HTTPException(status_code=status.HTTP_201_CREATED,
+    raise HTTPException(status_code=status.HTTP_201_CREATED,
                             detail="Question created successfully!")
 
 def get_all(db: Session):
@@ -72,7 +72,7 @@ def vote_question(positive:bool, current_user_id: int, question_id: int, db: Ses
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                             detail="Votes not update, check the request and try again")
 
-    return HTTPException(status_code=status.HTTP_201_CREATED,
+    raise HTTPException(status_code=status.HTTP_201_CREATED,
                             detail="Voted successfully!")
 
 def not_allow_yourself_to_vote(user_id:int, current_user_id:int):

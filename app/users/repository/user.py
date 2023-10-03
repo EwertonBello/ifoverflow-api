@@ -10,7 +10,7 @@ def register(request: schemas.User, db: Session):
     request.password=Hash.bcrypt(request.password)
     new_user = request.dict()
     if db.query(models.User).filter(models.User.email == request.email).first():
-        return HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                                 detail="User already exists!")
     try:
         db.execute(
@@ -22,7 +22,7 @@ def register(request: schemas.User, db: Session):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                             detail="User not created, check the request body and try again")
 
-    return HTTPException(status_code=status.HTTP_201_CREATED,
+    raise HTTPException(status_code=status.HTTP_201_CREATED,
                             detail=f"User {request.name} created successfully!")
 
 def show(id: int, db: Session):
