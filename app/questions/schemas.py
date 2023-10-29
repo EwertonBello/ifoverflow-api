@@ -30,6 +30,7 @@ class ShowTag(BaseModel):
         orm_mode = True
 
 class ShowComment(BaseModel):
+    id:int
     description:str
     user: ShowUser
     class Config():
