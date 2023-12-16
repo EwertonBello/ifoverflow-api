@@ -51,7 +51,7 @@
 | --------------------------- | ----------- | -------------------------------------------| ------------------------- |
 | `id_pergunta`               | Inteiro     | Identificador único da pergunta             |                           |
 | `assunto`                   | Varchar(100)| Assunto da pergunta                         | 100 caracteres            |
-| `descricao`                 | Texto       | Descrição detalhada da pergunta             |                           |
+| `descricao`                 | Texto       | Descrição detalhada da pergunta             | 1000 caracteres           |
 | `votos`                     | Inteiro     | Contagem de votos da pergunta               |                           |
 | `categorias_id_categoria`    | Inteiro     | Identificador único da categoria associada  |                           |
 | `usuarios_id_usuario`        | Inteiro     | Identificador único do usuário que fez a pergunta |                   |
@@ -61,7 +61,7 @@
 | Campo                          | Tipo        | Descrição                                   | Tamanho                   |
 | ------------------------------ | ----------- | -------------------------------------------| ------------------------- |
 | `id_resposta`                  | Inteiro     | Identificador único da resposta             |                           |
-| `descricao`                    | Texto       | Descrição detalhada da resposta             |                           |
+| `descricao`                    | Texto       | Descrição detalhada da resposta             | 1000 caracteres           |
 | `votos`                        | Inteiro     | Contagem de votos da resposta               |                           |
 | `aceita`                       | Tinyint     | Indicador se a resposta foi aceita (0 ou 1) |                           |
 | `usuarios_id_usuario`           | Inteiro     | Identificador único do usuário que respondeu |                        |
@@ -72,7 +72,7 @@
 | Campo                                | Tipo        | Descrição                                   | Tamanho                   |
 | ------------------------------------ | ----------- | -------------------------------------------| ------------------------- |
 | `id_comentarios_pergunta`           | Inteiro     | Identificador único do comentário na pergunta |                      |
-| `descricao`                          | Texto       | Descrição detalhada do comentário na pergunta|                      |
+| `descricao`                          | Texto       | Descrição detalhada do comentário na pergunta| 1000 caracteres      |
 | `usuarios_id_usuario`                | Inteiro     | Identificador único do usuário que comentou |                         |
 | `perguntas_id_pergunta`              | Inteiro     | Identificador único da pergunta associada   |                           |
 
@@ -81,7 +81,7 @@
 | Campo                               | Tipo        | Descrição                                    | Tamanho                   |
 | ----------------------------------- | ----------- | --------------------------------------------| ------------------------- |
 | `id_comentarios_resposta`           | Inteiro     | Identificador único do comentário na resposta |                     |
-| `descricao`                         | Texto       | Descrição detalhada do comentário na resposta  |                     |
+| `descricao`                         | Texto       | Descrição detalhada do comentário na resposta  | 1000 caracteres        |
 | `usuarios_id_usuario`               | Inteiro     | Identificador único do usuário que comentou    |                        |
 | `respostas_id_resposta`             | Inteiro     | Identificador único da resposta associada      |                        |
 
