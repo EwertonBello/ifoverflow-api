@@ -1,93 +1,104 @@
 ## Dicionário de Dados IFoverflow
 
 ### Tabela Campus
-| Campo          | Tipo        | Restrições                              |
-| -------------- | ----------- | ----------------------------------------|
-| `id_campus`    | Inteiro     | Not Null, Auto Incremento, Chave Primária|
-| `nome`         | Varchar(80) | Not Null                                |
-| `UF_id_uf`     | Inteiro     | Not Null, Chave Estrangeira (fk_campus_UF1), referenciando `uf.id_uf` ON DELETE CASCADE ON UPDATE CASCADE|
+
+| Campo            | Tipo        | Descrição                           | Tamanho                   |
+| ---------------- | ----------- | ----------------------------------- | ------------------------- |
+| `id_campus`      | Inteiro     | Identificador único do campus       |                           |
+| `nome`           | Varchar(80) | Nome do campus                      | 80 caracteres             |
+| `UF_id_uf`       | Inteiro     | Identificador único do estado (UF)  |                           |
+
 
 ### Tabela Categorias
-| Campo           | Tipo        | Restrições                              |
-| --------------- | ----------- | ----------------------------------------|
-| `id_categoria`  | Inteiro     | Not Null, Auto Incremento, Chave Primária|
-| `nome`          | Varchar(80) | Not Null                                |
+
+| Campo             | Tipo        | Descrição                   | Tamanho                   |
+| ----------------- | ----------- | --------------------------- | ------------------------- |
+| `id_categoria`    | Inteiro     | Identificador único da categoria |                           |
+| `nome`            | Varchar(80) | Nome da categoria           | 80 caracteres             |
 
 ### Tabela Classes
-| Campo           | Tipo        | Restrições                              |
-| --------------- | ----------- | ----------------------------------------|
-| `id_classe`     | Inteiro     | Not Null, Auto Incremento, Chave Primária|
-| `nome`          | Varchar(80) | Not Null                                |
-| `descricao`     | Texto       | Not Null                                |
-| `limite`        | Inteiro     | Not Null                                |
+
+| Campo           | Tipo        | Descrição                     | Tamanho                   |
+| --------------- | ----------- | ----------------------------- | ------------------------- |
+| `id_classe`     | Inteiro     | Identificador único da classe |                           |
+| `nome`          | Varchar(80) | Nome da classe                | 80 caracteres             |
+| `descricao`     | Texto       | Descrição da classe           |                           |
+| `limite`        | Inteiro     | Limite associado à classe     |                           |
 
 ### Tabela UF
-| Campo        | Tipo        | Restrições                              |
-| ------------ | ----------- | ----------------------------------------|
-| `id_uf`      | Inteiro     | Not Null, Auto Incremento, Chave Primária|
-| `nome`       | Varchar(80) | Not Null                                |
+
+| Campo        | Tipo        | Descrição                   | Tamanho                   |
+| ------------ | ----------- | --------------------------- | ------------------------- |
+| `id_uf`      | Inteiro     | Identificador único do estado|                           |
+| `nome`       | Varchar(80) | Nome do estado              | 80 caracteres             |
 
 ### Tabela Usuarios
-| Campo                  | Tipo        | Restrições                                                 |
-| ---------------------- | ----------- | ----------------------------------------------------------|
-| `id_usuario`           | Inteiro     | Not Null, Auto Incremento, Chave Primária                  |
-| `nome`                 | Varchar(80) | Not Null                                                   |
-| `votos`                | Inteiro     | Not Null, Padrão: 0                                       |
-| `avatar`               | Varchar(200)| Not Null                                                   |
-| `email`                | Varchar(200)| Not Null                                                   |
-| `senha`                | Varchar(200)| Not Null                                                   |
-| `campus_id_campus`     | Inteiro     | Not Null, Chave Estrangeira (fk_usuarios_campus1), referenciando `campus.id_campus` ON DELETE CASCADE ON UPDATE CASCADE |
-| `Classe_id_classe`     | Inteiro     | Not Null, Padrão: 1, Chave Estrangeira (fk_usuarios_Classe1), referenciando `classes.id_classe`|
+
+| Campo                  | Tipo        | Descrição                                   | Tamanho                   |
+| ---------------------- | ----------- | -------------------------------------------| ------------------------- |
+| `id_usuario`           | Inteiro     | Identificador único do usuário              |                           |
+| `nome`                 | Varchar(80) | Nome do usuário                             | 80 caracteres             |
+| `votos`                | Inteiro     | Contagem de votos do usuário                |                           |
+| `avatar`               | Varchar(200)| URL ou caminho do avatar do usuário         | 200 caracteres            |
+| `email`                | Varchar(200)| Endereço de e-mail do usuário               | 200 caracteres            |
+| `senha`                | Varchar(200)| Senha criptografada do usuário              | 200 caracteres            |
+| `campus_id_campus`     | Inteiro     | Identificador único do campus associado     |                           |
+| `Classe_id_classe`     | Inteiro     | Identificador único da classe do usuário    |                           |
 
 ### Tabela Perguntas
-| Campo                       | Tipo        | Restrições                                                           |
-| --------------------------- | ----------- | --------------------------------------------------------------------|
-| `id_pergunta`               | Inteiro     | Not Null, Auto Incremento, Chave Primária                            |
-| `assunto`                   | Varchar(100)| Not Null                                                             |
-| `descricao`                 | Texto       | Not Null                                                             |
-| `votos`                     | Inteiro     | Not Null, Padrão: 0                                                  |
-| `categorias_id_categoria`    | Inteiro     | Not Null, Chave Estrangeira (fk_perguntas_categorias2), referenciando `categorias.id_categoria` ON DELETE CASCADE ON UPDATE CASCADE |
-| `usuarios_id_usuario`        | Inteiro     | Not Null, Chave Estrangeira (fk_perguntas_usuarios1), referenciando `usuarios.id_usuario` ON DELETE CASCADE ON UPDATE CASCADE  |
+
+| Campo                       | Tipo        | Descrição                                   | Tamanho                   |
+| --------------------------- | ----------- | -------------------------------------------| ------------------------- |
+| `id_pergunta`               | Inteiro     | Identificador único da pergunta             |                           |
+| `assunto`                   | Varchar(100)| Assunto da pergunta                         | 100 caracteres            |
+| `descricao`                 | Texto       | Descrição detalhada da pergunta             |                           |
+| `votos`                     | Inteiro     | Contagem de votos da pergunta               |                           |
+| `categorias_id_categoria`    | Inteiro     | Identificador único da categoria associada  |                           |
+| `usuarios_id_usuario`        | Inteiro     | Identificador único do usuário que fez a pergunta |                   |
 
 ### Tabela Respostas
-| Campo                          | Tipo        | Restrições                                                               |
-| ------------------------------ | ----------- | ------------------------------------------------------------------------|
-| `id_resposta`                  | Inteiro     | Not Null, Auto Incremento, Chave Primária                                |
-| `descricao`                    | Texto       | Not Null                                                                 |
-| `votos`                        | Inteiro     | Not Null, Padrão: 0                                                      |
-| `aceita`                       | Tinyint     | Not Null, Padrão: 0 (indicando se a resposta foi aceita ou não)          |
-| `usuarios_id_usuario`           | Inteiro     | Not Null, Chave Estrangeira (fk_respostas_usuarios1), referenciando `usuarios.id_usuario` ON DELETE CASCADE ON UPDATE CASCADE |
-| `perguntas_id_pergunta`        | Inteiro     | Not Null, Chave Estrangeira (fk_respostas_perguntas1), referenciando `perguntas.id_pergunta` ON DELETE CASCADE ON UPDATE CASCADE |
+
+| Campo                          | Tipo        | Descrição                                   | Tamanho                   |
+| ------------------------------ | ----------- | -------------------------------------------| ------------------------- |
+| `id_resposta`                  | Inteiro     | Identificador único da resposta             |                           |
+| `descricao`                    | Texto       | Descrição detalhada da resposta             |                           |
+| `votos`                        | Inteiro     | Contagem de votos da resposta               |                           |
+| `aceita`                       | Tinyint     | Indicador se a resposta foi aceita (0 ou 1) |                           |
+| `usuarios_id_usuario`           | Inteiro     | Identificador único do usuário que respondeu |                        |
+| `perguntas_id_pergunta`        | Inteiro     | Identificador único da pergunta associada   |                           |
 
 ### Tabela Comentarios_Pergunta
-| Campo                                | Tipo        | Restrições                                                                   |
-| ------------------------------------ | ----------- | ------------------------------------------------------------------------------|
-| `id_comentarios_pergunta`           | Inteiro     | Not Null, Auto Incremento, Chave Primária                                    |
-| `descricao`                          | Texto       | Not Null                                                                     |
-| `usuarios_id_usuario`                | Inteiro     | Not Null, Chave Estrangeira (fk_comentarios_pergunta_usuarios1), referenciando `usuarios.id_usuario` ON DELETE CASCADE ON UPDATE CASCADE |
-| `perguntas_id_pergunta`              | Inteiro     | Not Null, Chave Estrangeira (fk_comentarios_pergunta_perguntas1), referenciando `perguntas.id_pergunta` ON DELETE CASCADE ON UPDATE CASCADE |
+
+| Campo                                | Tipo        | Descrição                                   | Tamanho                   |
+| ------------------------------------ | ----------- | -------------------------------------------| ------------------------- |
+| `id_comentarios_pergunta`           | Inteiro     | Identificador único do comentário na pergunta |                      |
+| `descricao`                          | Texto       | Descrição detalhada do comentário na pergunta|                      |
+| `usuarios_id_usuario`                | Inteiro     | Identificador único do usuário que comentou |                         |
+| `perguntas_id_pergunta`              | Inteiro     | Identificador único da pergunta associada   |                           |
 
 ### Tabela Comentarios_Resposta
-| Campo                               | Tipo        | Restrições                                                                   |
-| ----------------------------------- | ----------- | ------------------------------------------------------------------------------|
-| `id_comentarios_resposta`           | Inteiro     | Not Null, Auto Incremento, Chave Primária                                    |
-| `descricao`                         | Texto       | Not Null                                                                     |
-| `usuarios_id_usuario`               | Inteiro     | Not Null, Chave Estrangeira (fk_comentarios_resposta_usuarios1), referenciando `usuarios.id_usuario` ON DELETE CASCADE ON UPDATE CASCADE |
-| `respostas_id_resposta`             | Inteiro     | Not Null, Chave Estrangeira (fk_comentarios_resposta_respostas1), referenciando `respostas.id_resposta` ON DELETE CASCADE ON UPDATE CASCADE |
+
+| Campo                               | Tipo        | Descrição                                    | Tamanho                   |
+| ----------------------------------- | ----------- | --------------------------------------------| ------------------------- |
+| `id_comentarios_resposta`           | Inteiro     | Identificador único do comentário na resposta |                     |
+| `descricao`                         | Texto       | Descrição detalhada do comentário na resposta  |                     |
+| `usuarios_id_usuario`               | Inteiro     | Identificador único do usuário que comentou    |                        |
+| `respostas_id_resposta`             | Inteiro     | Identificador único da resposta associada      |                        |
 
 ### Tabela Votos_Pergunta
-| Campo                             | Tipo        | Restrições                                                                   |
-| --------------------------------- | ----------- | ------------------------------------------------------------------------------|
-| `id_votos_pergunta`               | Inteiro     | Not Null, Auto Incremento, Chave Primária                                    |
-| `voto`                            | Tinyint     | Not Null                                                                     |
-| `usuarios_id_usuario`             | Inteiro     | Not Null, Chave Estrangeira (fk_votos_pergunta_usuarios1), referenciando `usuarios.id_usuario` ON DELETE CASCADE |
-| `perguntas_id_pergunta`           | Inteiro     | Not Null, Chave Estrangeira (fk_votos_pergunta_perguntas1), referenciando `perguntas.id_pergunta` ON DELETE CASCADE |
+
+| Campo                             | Tipo        | Descrição                                     | Tamanho                   |
+| --------------------------------- | ----------- | ---------------------------------------------| ------------------------- |
+| `id_votos_pergunta`               | Inteiro     | Identificador único do voto na pergunta       |                           |
+| `voto`                            | Tinyint     | Valor do voto (+1 para cima, -1 para baixo)   |                           |
+| `usuarios_id_usuario`             | Inteiro     | Identificador único do usuário que votou      |                           |
+| `perguntas_id_pergunta`           | Inteiro     | Identificador único da pergunta votada        |                           |
 
 ### Tabela Votos_Resposta
-| Campo                             | Tipo        | Restrições                                                                   |
-| --------------------------------- | ----------- | ------------------------------------------------------------------------------|
-| `id_votos_resposta`               | Inteiro     | Not Null, Auto Incremento, Chave Primária                                    |
-| `voto`                            | Tinyint     | Not Null                                                                     |
-| `usuarios_id_usuario`             | Inteiro     | Not Null, Chave Estrangeira (fk_votos_resposta_usuarios1), referenciando `usuarios.id_usuario` ON DELETE CASCADE |
-| `respostas_id_resposta`           | Inteiro     | Not Null, Chave Estrangeira (fk_votos_resposta_respostas1), referenciando `respostas.id_resposta` ON DELETE CASCADE |
 
+| Campo                             | Tipo        | Descrição                                    | Tamanho                   |
+| --------------------------------- | ----------- | --------------------------------------------| ------------------------- |
+| `id_votos_resposta`               | Inteiro     | Identificador único do voto na resposta      |                           |
+| `voto`                            | Tinyint     | Valor do voto (+1 para cima, -1 para baixo)  |                           |
+| `usuarios_id_usuario`             | Inteiro     | Identificador único do usuário que votou     |                           |
+| `respostas_id_resposta`           | Inteiro     | Identificador único da resposta votada       |                           |
